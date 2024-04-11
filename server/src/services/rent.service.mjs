@@ -51,11 +51,27 @@ const editVistaGeneral = async (modelo, matricula) => {
     await db.query(sql, [modelo, matricula]);
 }
 
+const getClients = async () => {
+    const sql = "SELECT * FROM cliente"
+    const [results] = await db.query(sql);
+
+    return results;
+}
+
+const getClientByDNI = async (dni) => {
+    const sql = "SELECT * FROM cliente WHERE DNI=?"
+    const [results] = await db.query(sql, dni);
+
+    return results;
+}
+
 export default {
     getVistaGeneral,
     getVehicles,
     getVehicleByPlate,
     addVehicle,
     editVehicle,
-    deleteVehicle
+    deleteVehicle,
+    getClients,
+    getClientByDNI
 }

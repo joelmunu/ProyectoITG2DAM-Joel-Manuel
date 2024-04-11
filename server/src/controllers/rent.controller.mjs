@@ -194,11 +194,73 @@ const deleteVehicle = async (req, res) => {
     }
 }
 
+const getClients = async (req, res) => {
+    if (!req.query.name) {
+        try {
+            const data = await rentService.getClients();
+            res.send({
+                statusCode: httpCodes.OK,
+                statusMessage: 'OK',
+                message:
+                    !data || data.length === 0
+                        ? 'Error: La tabla clientes esta vacía'
+                        : 'Registros de la tabla cliente devueltos correctamente',
+                data
+            });
+        } catch (error) {
+            res.status(httpCodes.INTERNAL_SERVER_ERROR)
+                .send({
+                    statusCode: httpCodes.INTERNAL_SERVER_ERROR,
+                    statusMessage: 'Internal Server Error',
+                    message: null,
+                    data: null
+                });
+        }
+    }
+}
+
+const getClientByDNI = async (req, res) => {
+    const { dni } = req.params;
+
+    if (!dni) {
+        res.status(httpCodes.BAD_REQUEST)
+            .send({
+                statusCode: httpCodes.BAD_REQUEST,
+                statusMessage: 'Bad Request',
+                message: 'Error: El parámetro dni se requiere',
+                data: null
+            });
+    };
+
+    try {
+        const data = await rentService.getClientByDNI(dni)
+        res.send({
+            statusCode: httpCodes.OK,
+            statusMessage: 'OK',
+            message:
+                !data || data.length === 0
+                    ? 'Error: No se encuentra el cliente'
+                    : 'OK',
+            data
+        });
+    } catch (error) {
+        res.status(httpCodes.INTERNAL_SERVER_ERROR)
+            .send({
+                statusCode: httpCodes.INTERNAL_SERVER_ERROR,
+                statusMessage: 'Internal Server Error',
+                message: null,
+                data: null
+            });
+    }
+}
+
 export default {
     getVistaGeneral,
     getVehicles,
     getVehicleByPlate,
     addVehicle,
     editVehicle,
-    deleteVehicle
+    deleteVehicle,
+    getClients,
+    getClientByDNI,
 }
