@@ -3,15 +3,14 @@ import rentController from "../controllers/rent.controller.mjs";
 
 const router = Router();
 
-//Endpoint para obtener los datos de la vista general
+// Endpoint para obtener los datos de la vista general
 router.route('/rentacartf/vistageneral').get(rentController.getVistaGeneral);
 
-//Endpoint para obtener todos los vehiculos
-router.route('/rentacartf/vehiculos').get(rentController.getVehicles)
-                                    .post(rentController.addVehicle);
+router.route('/rentacartf/vehiculos').get(rentController.getVehicles) // Endpoint para obtener todos los vehiculos
+                                    .post(rentController.addVehicle); // Endpoint para crear un nuevo vehiculo
 
-router.route('/rentacartf/vehiculo/:matriculaParam').get(rentController.getVehicleByPlate)
-                                                    .put(rentController.editVehicle)
-                                                    .delete(rentController.deleteVehicle);
+router.route('/rentacartf/vehiculo/:matriculaParam').get(rentController.getVehicleByPlate) //Endpoint obtener un vehiculo por su matricula
+                                                    .put(rentController.editVehicle)       //Endpoint para editar un vehiculo por su matricula
+                                                    .delete(rentController.deleteVehicle); //Endpoint para eliminar un vehiculo por su matricula
 
 export default router;

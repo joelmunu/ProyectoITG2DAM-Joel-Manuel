@@ -20,16 +20,16 @@ const getVehicleByPlate = async (matriculaParam) => {
     return results;
 }
 
-const addVehicle = async (matriculaCar, fabricante, modelo, motorizacion, antiguedad) => {
-    const sql = "INSERT INTO vehiculo (matriculaCar, fabricante, modelo, motorizacion, antigüedad, alquilado, enmantenimiento) VALUES (?, ?, ?, ?, ?, 0, 0)"
-    const [results] = await db.query(sql, [matriculaCar, fabricante, modelo, motorizacion, antiguedad]);
+const addVehicle = async (matriculaCar, fabricante, modelo, motorizacion, antiguedad, descripcion, tipoVehiculo, precioDia) => {
+    const sql = "INSERT INTO vehiculo (matriculaCar, fabricante, modelo, motorizacion, antigüedad, alquilado, enmantenimiento, descripcion, tipoVehiculo, precioDia) VALUES (?, ?, ?, ?, ?, 0, 0, ?, ?, ?)"
+    const [results] = await db.query(sql, [matriculaCar, fabricante, modelo, motorizacion, antiguedad, descripcion, tipoVehiculo, precioDia]);
     updateVistaGeneral(matriculaCar, modelo);
     return results;
 }
 
-const editVehicle = async (fabricante, modelo, motorizacion, antiguedad, matricula) => {
-    const sql = "UPDATE vehiculo SET fabricante=?, modelo=?, motorizacion=?, antigüedad=? WHERE matriculaCar=?";
-    const [results] = await db.query(sql, [fabricante, modelo, motorizacion, antiguedad, matricula]);
+const editVehicle = async (fabricante, modelo, motorizacion, antiguedad, descripcion, tipoVehiculo, precioDia, matricula) => {
+    const sql = "UPDATE vehiculo SET fabricante=?, modelo=?, motorizacion=?, antigüedad=?, descripcion=?, tipoVehiculo=?, precioDia=? WHERE matriculaCar=?";
+    const [results] = await db.query(sql, [fabricante, modelo, motorizacion, antiguedad, descripcion, tipoVehiculo, precioDia, matricula]);
     editVistaGeneral(modelo, matricula);
     return results;
 }
@@ -45,8 +45,6 @@ const updateVistaGeneral = async (matricula, modelo) => {
     const sql = "INSERT INTO vistageneral (matricula, modelo, alquilado, enmantenimiento, dniinquilino) VALUES(?, ?, 0, 0, '');";
     await db.query(sql, [matricula, modelo]);
 }
-
-
 
 const editVistaGeneral = async (modelo, matricula) => {
     const sql = "UPDATE vistageneral SET modelo=? WHERE matricula=?";

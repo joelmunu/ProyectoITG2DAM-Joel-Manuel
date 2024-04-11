@@ -87,21 +87,21 @@ const getVehicleByPlate = async (req, res) => {
 }
 
 const addVehicle = async (req, res) => {
-    const { matriculaCar, fabricante, modelo, motorizacion, antiguedad } = req.body;
+    const { matriculaCar, fabricante, modelo, motorizacion, antiguedad, descripcion, tipoVehiculo, precioDia } = req.body;
 
-    if (!matriculaCar || !fabricante || !modelo || !motorizacion || !antiguedad) {
-        console.log(`ERROR: Missing ${!matriculaCar ? 'matriculaCar' : ''} ${!fabricante ? 'fabricante' : ''} ${!modelo ? 'modelo' : ''} ${!motorizacion ? 'motorizacion' : ''} ${!antiguedad ? 'antiguedad' : ''} field(s)`);
+    if (!matriculaCar || !fabricante || !modelo || !motorizacion || !antiguedad || !descripcion || !tipoVehiculo || !precioDia) {
+        console.log(`ERROR: Missing ${!matriculaCar ? 'matriculaCar' : ''} ${!fabricante ? 'fabricante' : ''} ${!modelo ? 'modelo' : ''} ${!motorizacion ? 'motorizacion' : ''} ${!antiguedad ? 'antiguedad' : ''} ${!descripcion ? 'descripcion' : ''} ${!tipoVehiculo ? 'tipoVehiculo' : ''} ${!precioDia ? 'precioDia' : ''}field(s)`);
 
         return res.status(httpCodes.BAD_REQUEST).send({
             statusCode: httpCodes.BAD_REQUEST,
             statusMessage: 'Bad Request',
-            message: 'Error: Los parámetros matrícula, fabricante, modelo, motorizacion, and antigüedad se requieren',
+            message: 'Error: se requieren todos los parámetros',
             data: null
         });
     };
 
     try {
-        const data = await rentService.addVehicle(matriculaCar, fabricante, modelo, motorizacion, antiguedad);
+        const data = await rentService.addVehicle(matriculaCar, fabricante, modelo, motorizacion, antiguedad, descripcion, tipoVehiculo, precioDia);
         res.send({
             statusCode: httpCodes.OK,
             statusMessage: 'OK',
@@ -125,20 +125,20 @@ const addVehicle = async (req, res) => {
 
 const editVehicle = async (req, res) => {
     const { matriculaParam } = req.params;
-    const { fabricante, modelo, motorizacion, antiguedad } = req.body;
+    const { fabricante, modelo, motorizacion, antiguedad, descripcion, tipoVehiculo, precioDia } = req.body;
 
-    if (!fabricante || !modelo || !motorizacion || !antiguedad) {
+    if (!fabricante || !modelo || !motorizacion || !antiguedad || !descripcion || !tipoVehiculo || !precioDia) {
         res.status(httpCodes.OK)
             .send({
                 statusCode: httpCodes.OK,
                 statusMessage: 'Bad Request',
-                message: 'Error: Los parámetros matrícula, fabricante, modelo, motorizacion, and antigüedad se requieren',
+                message: 'Error: se requieren todos los parámetros',
                 data: null
             });
     };
 
     try {
-        const data = await rentService.editVehicle(fabricante, modelo, motorizacion, antiguedad, matriculaParam);
+        const data = await rentService.editVehicle(fabricante, modelo, motorizacion, antiguedad, descripcion, tipoVehiculo, precioDia, matriculaParam);
         res.send({
             statusCode: httpCodes.OK,
             statusMessage: 'OK',
