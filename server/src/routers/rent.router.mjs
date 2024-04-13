@@ -13,8 +13,11 @@ router.route('/rentacartf/vehiculo/:matriculaParam').get(rentController.getVehic
                                                     .put(rentController.editVehicle)       //Endpoint para editar un vehiculo por su matricula
                                                     .delete(rentController.deleteVehicle); //Endpoint para eliminar un vehiculo por su matricula
 
-router.route('/rentacartf/clientes').get(rentController.getClients);
+router.route('/rentacartf/clientes').get(rentController.getClients)
+                                    .post(rentController.addClient);
 
-router.route('/rentacartf/cliente/:dni').get(rentController.getClientByDNI);
+router.route('/rentacartf/cliente/:dniParam').get(rentController.getClientByDNI)
+                                             .put(rentController.editClient)
+                                             .delete(rentController.deleteClient);
 
 export default router;

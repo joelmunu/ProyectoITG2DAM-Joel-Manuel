@@ -220,9 +220,9 @@ const getClients = async (req, res) => {
 }
 
 const getClientByDNI = async (req, res) => {
-    const { dni } = req.params;
+    const { dniParam } = req.params;
 
-    if (!dni) {
+    if (!dniParam) {
         res.status(httpCodes.BAD_REQUEST)
             .send({
                 statusCode: httpCodes.BAD_REQUEST,
@@ -233,7 +233,7 @@ const getClientByDNI = async (req, res) => {
     };
 
     try {
-        const data = await rentService.getClientByDNI(dni)
+        const data = await rentService.getClientByDNI(dniParam)
         res.send({
             statusCode: httpCodes.OK,
             statusMessage: 'OK',
@@ -241,6 +241,111 @@ const getClientByDNI = async (req, res) => {
                 !data || data.length === 0
                     ? 'Error: No se encuentra el cliente'
                     : 'OK',
+            data
+        });
+    } catch (error) {
+        res.status(httpCodes.INTERNAL_SERVER_ERROR)
+            .send({
+                statusCode: httpCodes.INTERNAL_SERVER_ERROR,
+                statusMessage: 'Internal Server Error',
+                message: null,
+                data: null
+            });
+    }
+}
+
+const addClient = async (req, res) => {
+    const { dni, nombre, apellidos, email, password } = req.body;
+
+    if (!dni || !nombre || !apellidos || !email || !password ) {
+        return res.status(httpCodes.BAD_REQUEST).send({
+            statusCode: httpCodes.BAD_REQUEST,
+            statusMessage: 'Bad Request',
+            message: 'Error: Se requieren los parámetros dni, nombre, apellidos, email y contraseña',
+            data: null
+        });
+    };
+
+    try {
+        const data = await rentService.addClient(dni, nombre, apellidos, email, password);
+        res.send({
+            statusCode: httpCodes.OK,
+            statusMessage: 'OK',
+            message:
+                !data || data.length === 0
+                    ? 'Error: La tabla clientes está vacia'
+                    : 'Cliente añadido correctamente',
+            data
+        });
+    } catch (error) {
+        console.log(error)
+        res.status(httpCodes.INTERNAL_SERVER_ERROR)
+            .send({
+                statusCode: httpCodes.INTERNAL_SERVER_ERROR,
+                statusMessage: 'Internal Server Error',
+                message: null,
+                data: null
+            });
+    }
+}
+
+const editClient = async (req, res) => {
+    const { dniParam } = req.params;
+    const { nombre, apellidos, email } = req.body;
+
+    if (!nombre || !apellidos || !email ) {
+        res.status(httpCodes.OK)
+            .send({
+                statusCode: httpCodes.OK,
+                statusMessage: 'Bad Request',
+                message: 'Error: se requieren todos los parámetros',
+                data: null
+            });
+    };
+
+    try {
+        const data = await rentService.editClient(dniParam, nombre, apellidos, email);
+        res.send({
+            statusCode: httpCodes.OK,
+            statusMessage: 'OK',
+            message:
+                !data || data.length === 0
+                    ? 'Error: No se encuentra el cliente que se desea editar'
+                    : 'Vehículo modificado correctamente',
+            data
+        });
+    } catch (error) {
+        res.status(httpCodes.INTERNAL_SERVER_ERROR)
+            .send({
+                statusCode: httpCodes.INTERNAL_SERVER_ERROR,
+                statusMessage: 'Internal Server Error',
+                message: null,
+                data: null
+            });
+    }
+}
+
+const deleteClient = async (req, res) => {
+    const { dniParam } = req.params;
+    if (!dniParam) {
+        res.status(httpCodes.OK)
+            .send({
+                statusCode: httpCodes.OK,
+                statusMessage: 'Bad Request',
+                message: 'Error: El parámetro dni es requerido',
+                data: null
+            });
+    };
+
+    try {
+        const data = await rentService.deleteClient(dniParam);
+        res.send({
+            statusCode: !data || data.length === 0 ? httpCodes.NOT_FOUND : httpCodes.OK,
+            statusMessage: 'OK',
+            message:
+                !data || data.length === 0
+                    ? 'Error: No se encuentra el cliente que se desea eliminar'
+                    : 'Cliente eliminado correctamente de la tabla cliente',
             data
         });
     } catch (error) {
@@ -263,4 +368,7 @@ export default {
     deleteVehicle,
     getClients,
     getClientByDNI,
+    addClient,
+    editClient,
+    deleteClient
 }

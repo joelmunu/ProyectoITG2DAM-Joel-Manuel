@@ -65,6 +65,29 @@ const getClientByDNI = async (dni) => {
     return results;
 }
 
+const addClient = async (dni, nombre, apellidos, email, password) => {
+    const sql = "INSERT INTO cliente VALUES(?, ?, ?, ?, ?, 0, null, null, '')";
+    const [results] = await db.query(sql, [dni, nombre, apellidos, email, password]);
+
+    return results;
+}
+
+const editClient = async (dni, nombre, apellidos, email) => {
+    const sql = "UPDATE cliente SET nombre=?, apellidos=?, email=? WHERE DNI=?";
+    const [results] = await db.query(sql, [nombre, apellidos, email, dni]);
+
+    return results;
+}
+
+//TODO: Hacer endpoints para alquilar y cancelar alquileres
+
+const deleteClient = async (dni) => {
+    const sql = "DELETE FROM cliente WHERE dni=?";
+    const [results] = await db.query(sql, [dni]);
+
+    return results;
+}
+
 export default {
     getVistaGeneral,
     getVehicles,
@@ -73,5 +96,8 @@ export default {
     editVehicle,
     deleteVehicle,
     getClients,
-    getClientByDNI
+    getClientByDNI,
+    addClient,
+    editClient,
+    deleteClient
 }
