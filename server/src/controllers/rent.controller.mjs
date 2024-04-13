@@ -257,7 +257,7 @@ const getClientByDNI = async (req, res) => {
 const addClient = async (req, res) => {
     const { dni, nombre, apellidos, email, password } = req.body;
 
-    if (!dni || !nombre || !apellidos || !email || !password ) {
+    if (!dni || !nombre || !apellidos || !email || !password) {
         return res.status(httpCodes.BAD_REQUEST).send({
             statusCode: httpCodes.BAD_REQUEST,
             statusMessage: 'Bad Request',
@@ -293,7 +293,7 @@ const editClient = async (req, res) => {
     const { dniParam } = req.params;
     const { nombre, apellidos, email } = req.body;
 
-    if (!nombre || !apellidos || !email ) {
+    if (!nombre || !apellidos || !email) {
         res.status(httpCodes.OK)
             .send({
                 statusCode: httpCodes.OK,
@@ -359,6 +359,113 @@ const deleteClient = async (req, res) => {
     }
 }
 
+const getMaintenance = async (req, res) => {
+    const { matricula } = req.params;
+
+    if (!matricula) {
+        res.status(httpCodes.OK)
+            .send({
+                statusCode: httpCodes.OK,
+                statusMessage: 'Bad Request',
+                message: 'Error: El parámetro matrícula es requerido',
+                data: null
+            });
+    };
+
+    if (!req.query.name) {
+        try {
+            const data = await rentService.getMaintenance(matricula);
+            res.send({
+                statusCode: httpCodes.OK,
+                statusMessage: 'OK',
+                message:
+                    !data || data.length === 0
+                        ? 'Error: La tabla mantenimiento está vacía'
+                        : 'Registro de la tabla mantenimiento devuelto correctamente',
+                data
+            });
+        } catch (error) {
+            res.status(httpCodes.INTERNAL_SERVER_ERROR)
+                .send({
+                    statusCode: httpCodes.INTERNAL_SERVER_ERROR,
+                    statusMessage: 'Internal Server Error',
+                    message: null,
+                    data: null
+                });
+        }
+    }
+}
+
+const addMaintenance = async (req, res) => {
+    const { matricula, modelo, tipo, estado } = req.body;
+
+    if (!matricula || !modelo || !tipo || !estado) {
+        return res.status(httpCodes.BAD_REQUEST).send({
+            statusCode: httpCodes.BAD_REQUEST,
+            statusMessage: 'Bad Request',
+            message: 'Error: Se requieren los parámetros matrícula, modelo, tipo y estado',
+            data: null
+        });
+    };
+
+    try {
+        const data = await rentService.addMaintenance(matricula, modelo, tipo, estado)
+        res.send({
+            statusCode: httpCodes.OK,
+            statusMessage: 'OK',
+            message:
+                !data || data.length === 0
+                    ? 'Error: La tabla mantenimiento está vacía'
+                    : 'Vehículo añadido a la tabla mantenimiento',
+            data
+        });
+    } catch (error) {
+        console.log(error)
+        res.status(httpCodes.INTERNAL_SERVER_ERROR)
+            .send({
+                statusCode: httpCodes.INTERNAL_SERVER_ERROR,
+                statusMessage: 'Internal Server Error',
+                message: null,
+                data: null
+            });
+    };
+}
+
+const deleteMaintenance = async (req, res) => {
+    const { matricula } = req.params;
+
+    if (!matricula) {
+        res.status(httpCodes.OK)
+            .send({
+                statusCode: httpCodes.OK,
+                statusMessage: 'Bad Request',
+                message: 'Error: El parámetro matrícula es requerido',
+                data: null
+            });
+    };
+
+    try {
+        const data = await rentService.deleteMaintenance(matricula);
+        res.send({
+            statusCode: !data || data.length === 0 ? httpCodes.NOT_FOUND : httpCodes.OK,
+            statusMessage: 'OK',
+            message:
+                !data || data.length === 0
+                    ? 'Error: No se encuentra el vehículo que se desea eliminar de la tabla mantenimiento'
+                    : 'Vehículo eliminado correctamente de la tabla mantenimiento',
+            data
+        });
+    } catch (error) {
+        res.status(httpCodes.INTERNAL_SERVER_ERROR)
+            .send({
+                statusCode: httpCodes.INTERNAL_SERVER_ERROR,
+                statusMessage: 'Internal Server Error',
+                message: null,
+                data: null
+            });
+    }
+}
+
 export default {
     getVistaGeneral,
     getVehicles,
@@ -370,5 +477,8 @@ export default {
     getClientByDNI,
     addClient,
     editClient,
-    deleteClient
+    deleteClient,
+    getMaintenance,
+    addMaintenance,
+    deleteMaintenance
 }

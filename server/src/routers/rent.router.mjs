@@ -19,5 +19,10 @@ router.route('/rentacartf/clientes').get(rentController.getClients)
 router.route('/rentacartf/cliente/:dniParam').get(rentController.getClientByDNI)
                                              .put(rentController.editClient)
                                              .delete(rentController.deleteClient);
+                                        
+router.route('/rentacartf/mantenimiento').post(rentController.addMaintenance);
+
+router.route('/rentacartf/mantenimiento/:matricula').delete(rentController.deleteMaintenance)
+                                                    .get(rentController.getMaintenance);
 
 export default router;

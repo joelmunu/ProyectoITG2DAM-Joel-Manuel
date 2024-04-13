@@ -88,6 +88,32 @@ const deleteClient = async (dni) => {
     return results;
 }
 
+const getMaintenance = async (matricula) => {
+    const sql = "SELECT * FROM mantenimiento WHERE matriculaMant=?";
+    const [results] = await db.query(sql, [matricula]);
+
+    return results;
+}
+
+const addMaintenance = async (matricula, modelo, tipo, estado) => {
+    const sql = "INSERT INTO mantenimiento VALUES(?, ?, ?, ?)";
+    const [results] = await db.query(sql, [matricula, modelo, tipo, estado])
+    setMaintenance(1, matricula)
+    return results;
+}
+
+const deleteMaintenance = async (matricula) => {
+    const sql = "DELETE FROM mantenimiento WHERE matriculaMant=?";
+    const [results] = await db.query(sql, [matricula]);
+    setMaintenance(0, matricula);
+    return results;
+}
+
+const setMaintenance = async (mantenimiento, matricula) => {
+    db.query("UPDATE vehiculo SET enmantenimiento=? WHERE matriculacar=?", [mantenimiento, matricula]);
+    db.query("UPDATE vistageneral SET enmantenimiento=? WHERE matricula=?", [mantenimiento, matricula]);
+}
+
 export default {
     getVistaGeneral,
     getVehicles,
@@ -99,5 +125,8 @@ export default {
     getClientByDNI,
     addClient,
     editClient,
-    deleteClient
+    deleteClient,
+    getMaintenance,
+    addMaintenance,
+    deleteMaintenance
 }
