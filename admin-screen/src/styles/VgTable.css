@@ -1,0 +1,49 @@
+/* Estilos para la página */
+body {
+  background-image: url(../assets/background-image.png);
+  background-size: cover;
+  font-family: Arial, sans-serif; /* Fuente predeterminada */
+  color: #ffff;
+  font-size: 20px;
+}
+
+.container {
+  display: flex; /* Usa flexbox para centrar contenido */
+  flex-direction: column; /* Alinear contenido en columna */
+  align-items: center; /* Centra horizontalmente */
+  padding: 20px; /* Espacio alrededor del contenido */
+  text-align: center; /* Centra el texto */
+}
+
+/* Estilos para el título */
+.title {
+  margin-bottom: 20px; /* Espacio entre el título y la tabla */
+}
+
+/* Estilos para el contenedor de la tabla */
+.table-container {
+  background-color: rgba(184, 225, 227, 0.8); /* Fondo translúcido */
+  border-radius: 10px; /* Bordes redondeados */
+  padding: 20px; /* Espacio alrededor de la tabla */
+  width: 900px;
+}
+
+/* Estilos para el contenedor de desplazamiento */
+.table-container.scrollable {
+  max-height: 10px; /* Altura máxima antes de que aparezca el scroll */
+  overflow-y: auto; /* Scroll vertical si es necesario */
+}
+
+/* Estilos para la tabla */
+.table {
+  width: 100%; /* Ancho completo */
+  border-collapse: collapse; /* Combina los bordes de las celdas */
+}
+
+.table th,
+.table td {
+  padding: 10px; /* Espaciado interno de celdas */
+  text-align: left; /* Alineación del texto a la izquierda */
+  border-bottom: 1px solid #ddd; /* Borde inferior de las filas */
+  padding-right: 25px;
+}

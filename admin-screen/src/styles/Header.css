@@ -1,0 +1,19 @@
+/* styles.css */
+.HeaderContainer {
+  width: 100%;
+  height: 66px;
+  margin: 0 auto;
+  background-color: #3066be;
+}
+
+.title {
+  margin-left: 10px;
+  font-size: 24px;
+  color: #ffff;
+}
+
+a {
+  color: #ffff;
+  font-size: 18px;
+  text-decoration: none;
+}
