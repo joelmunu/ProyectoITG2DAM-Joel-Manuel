@@ -1,4 +1,3 @@
-/* styles.css */
 .HeaderContainer {
   width: 100%;
   height: 66px;
@@ -6,14 +5,34 @@
   background-color: #3066be;
 }
 
-.title {
-  margin-left: 10px;
-  font-size: 24px;
-  color: #ffff;
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10px; /* Ajusta el espacio alrededor del contenido */
+}
+
+.left-section,
+.right-section {
+  display: flex;
+  align-items: center;
+}
+
+.nav-links {
+  display: flex;
 }
 
 a {
   color: #ffff;
   font-size: 18px;
   text-decoration: none;
+  padding: 10px;
+}
+
+.title,
+.title2 {
+  font-size: 30px;
+  color: #ffff;
+  font-weight: bold;
+  margin-right: 15px; /* Ajusta el espacio entre el texto y los enlaces */
 }

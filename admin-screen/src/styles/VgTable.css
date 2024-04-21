@@ -22,7 +22,7 @@ body {
 
 /* Estilos para el contenedor de la tabla */
 .table-container {
-  background-color: rgba(184, 225, 227, 0.8); /* Fondo translúcido */
+  background-color: hsla(183, 43%, 81%, 0.8); /* Fondo translúcido */
   border-radius: 10px; /* Bordes redondeados */
   padding: 20px; /* Espacio alrededor de la tabla */
   width: 900px;
