@@ -5,9 +5,13 @@ import "../../styles/VgTable.css";
 const VgTable = ({ vehicles }) => {
   return (
     <div className="container">
-      <h1 className="">Vista general</h1>
-      <div className="table-container">
-        <table className="table table-success table-striped table-scroll">
+      <h1 className="table-title">Vista general</h1>
+      <div
+        className={`table-container ${
+          vehicles.length > 10 ? "scrollable" : ""
+        }`}
+      >
+        <table className="table table-success table-striped">
           <thead>
             <tr>
               <th scope="col">Matricula</th>

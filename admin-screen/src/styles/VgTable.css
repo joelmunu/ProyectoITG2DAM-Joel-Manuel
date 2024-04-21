@@ -13,6 +13,12 @@ body {
   align-items: center; /* Centra horizontalmente */
   padding: 20px; /* Espacio alrededor del contenido */
   text-align: center; /* Centra el texto */
+  background-color: hsla(183, 43%, 81%, 0.8); /* Fondo translúcido */
+  border-radius: 10px; /* Bordes redondeados */
+  padding: 20px; /* Espacio alrededor de la tabla */
+  width: 1133px;
+  margin: 0 auto;
+  margin-top: 50px;
 }
 
 /* Estilos para el título */
@@ -21,16 +27,10 @@ body {
 }
 
 /* Estilos para el contenedor de la tabla */
-.table-container {
-  background-color: hsla(183, 43%, 81%, 0.8); /* Fondo translúcido */
-  border-radius: 10px; /* Bordes redondeados */
-  padding: 20px; /* Espacio alrededor de la tabla */
-  width: 900px;
-}
 
 /* Estilos para el contenedor de desplazamiento */
 .table-container.scrollable {
-  max-height: 10px; /* Altura máxima antes de que aparezca el scroll */
+  max-height: 600px; /* Altura máxima antes de que aparezca el scroll */
   overflow-y: auto; /* Scroll vertical si es necesario */
 }
 
@@ -45,5 +45,9 @@ body {
   padding: 10px; /* Espaciado interno de celdas */
   text-align: left; /* Alineación del texto a la izquierda */
   border-bottom: 1px solid #ddd; /* Borde inferior de las filas */
-  padding-right: 25px;
+  padding-right: 110px;
+}
+
+.table-title {
+  align-self: flex-start;
 }

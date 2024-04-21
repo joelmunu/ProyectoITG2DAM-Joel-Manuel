@@ -5,34 +5,36 @@
   background-color: #3066be;
 }
 
-.header-content {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 10px; /* Ajusta el espacio alrededor del contenido */
-}
-
-.left-section,
-.right-section {
-  display: flex;
-  align-items: center;
-}
-
-.nav-links {
-  display: flex;
+.headerContent {
+  width: 100%; /* Added to make centering work consistently */
+  display: flex; /* Use flexbox for horizontal alignment */
+  justify-content: space-between; /* Distribute content with spaces between */
+  align-items: center; /* Center content vertically within .headerContent (optional) */
 }
 
 a {
   color: #ffff;
   font-size: 18px;
   text-decoration: none;
-  padding: 10px;
+  padding: 1px;
+  /* Removed margin as flexbox will handle spacing */
 }
 
-.title,
-.title2 {
+.title {
+  margin-top: 10px;
   font-size: 30px;
   color: #ffff;
   font-weight: bold;
-  margin-right: 15px; /* Ajusta el espacio entre el texto y los enlaces */
+  /* Margin-right not needed anymore */
+}
+
+.logout-btn {
+  border-radius: 10px;
+  width: 40px;
+  height: 40px;
+  background-color: #ff4a41;
+  border: none;
+  color: #fff;
+  margin-left: 25px;
+  margin-right: 25px;
 }
