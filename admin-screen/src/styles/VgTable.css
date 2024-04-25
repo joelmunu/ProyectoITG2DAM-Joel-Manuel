@@ -30,7 +30,7 @@ body {
 
 /* Estilos para el contenedor de desplazamiento */
 .table-container.scrollable {
-  max-height: 600px; /* Altura máxima antes de que aparezca el scroll */
+  max-height: 500px; /* Altura máxima antes de que aparezca el scroll */
   overflow-y: auto; /* Scroll vertical si es necesario */
 }
 
