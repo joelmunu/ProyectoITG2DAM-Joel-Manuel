@@ -2,9 +2,12 @@ import RentService from "../../services/rent.service";
 import "../../styles/RentApp.css";
 import { useState, useEffect } from "react";
 import VgTable from "../vgtable/VgTable";
+import VhTable from "../vhtable/VhTable";
+import { Routes, Route } from "react-router-dom";
 
 const RentApp = () => {
   const [vehicles, setVehicles] = useState([]);
+  const [vehicleData, setVehicleData] = useState([]);
 
   useEffect(() => {
     async function getVistaGeneral() {
@@ -18,9 +21,31 @@ const RentApp = () => {
     getVistaGeneral();
   }, []);
 
+  useEffect(() => {
+    async function getVehicles() {
+      try {
+        const data = await RentService.getVehicles();
+        setVehicleData(data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    getVehicles();
+  }, []);
+
   return (
     <div className="ContainerImagen">
-      <VgTable vehicles={vehicles}></VgTable>
+      <Routes>
+        <Route
+          path="/VistaGeneral"
+          element={<VgTable vehicles={vehicles} />}
+        ></Route>
+
+        <Route
+          path="/Vehiculos"
+          element={<VhTable vehicles={vehicleData} />}
+        ></Route>
+      </Routes>
     </div>
   );
 };
