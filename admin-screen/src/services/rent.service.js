@@ -13,9 +13,16 @@ const getVehicles = async () => {
   return vehicleData.data;
 };
 
+const getClients = async () => {
+  const response = await axios.get(`${API_URL}/clientes`);
+  const clientsData = response.data;
+  return clientsData.data;
+};
+
 const RentService = {
   getVistaGeneral,
   getVehicles,
+  getClients,
 };
 
 export default RentService;

@@ -1,9 +1,9 @@
 import React from "react";
 
-const clientRow = ({ client }) => {
+const ClRow = ({ client }) => {
   return (
     <tr>
-      <th scope="row">{client.Nombre}</th>
+      <th scope="row">{client.DNI}</th>
       <td>{client.Nombre}</td>
       <td>{client.Apellidos}</td>
       <td>{client.email}</td>
@@ -15,4 +15,4 @@ const clientRow = ({ client }) => {
   );
 };
 
-export default clientRow;
+export default ClRow;
