@@ -48,6 +48,15 @@ body {
   padding-right: 110px;
 }
 
-.table-title-vh {
+.add-vehicle-button {
+  background-color: #119da4; /* Color de fondo verde */
+  color: white; /* Color de texto blanco */
+  padding: 12px 20px; /* Acolchado interno */
+  border: none; /* Sin borde */
+  border-radius: 4px; /* Bordes redondeados */
+  cursor: pointer; /* Puntero del cursor como mano */
+  margin-bottom: 5px; /* Margen superior */
   align-self: flex-start;
+  font-weight: bold;
+  font-size: 15px;
 }

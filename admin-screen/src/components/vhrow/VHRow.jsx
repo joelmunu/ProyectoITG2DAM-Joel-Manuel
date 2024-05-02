@@ -5,7 +5,7 @@ const VHRow = ({ vehicle }) => {
     <tr>
       <th scope="row">{vehicle.MatriculaCar}</th>
       <td>{vehicle.Modelo}</td>
-      <td>{vehicle.Motor}</td>
+      <td>{vehicle.Motorizacion}</td>
       <td>{vehicle.Alquilado}</td>
       <td>{vehicle.PrecioDia}</td>
       <td>{vehicle.EnMantenimiento}</td>
