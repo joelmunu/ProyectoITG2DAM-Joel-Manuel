@@ -1,14 +1,15 @@
 import React from "react";
 import ClRow from "../ClRow/ClRow";
+import "../../styles/ClTable.css";
 
 const ClTable = ({ clients }) => {
   return (
-    <div className="container">
-      <h1 className="table-title">Vista general</h1>
+    <div className="container-cl">
+      <h1 className="table-title-cl">Vista general</h1>
       <div
         className={`table-container ${clients.length > 10 ? "scrollable" : ""}`}
       >
-        <table className="table table-success table-striped">
+        <table className="table-cl">
           <thead>
             <tr>
               <th scope="col">DNI</th>

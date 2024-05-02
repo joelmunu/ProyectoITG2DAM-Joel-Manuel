@@ -7,7 +7,7 @@ body {
   font-size: 20px;
 }
 
-.container-vh {
+.container-cl {
   display: flex; /* Usa flexbox para centrar contenido */
   flex-direction: column; /* Alinear contenido en columna */
   align-items: center; /* Centra horizontalmente */
@@ -35,19 +35,19 @@ body {
 }
 
 /* Estilos para la tabla */
-.table {
+.table-cl {
   width: 100%; /* Ancho completo */
   border-collapse: collapse; /* Combina los bordes de las celdas */
 }
 
-.table th,
-.table td {
+.table-cl th,
+.table-cl td {
   padding: 10px; /* Espaciado interno de celdas */
   text-align: left; /* Alineación del texto a la izquierda */
   border-bottom: 1px solid #ddd; /* Borde inferior de las filas */
-  padding-right: 110px;
+  padding-right: 60px;
 }
 
-.table-title-vh {
+.table-title-cl {
   align-self: flex-start;
 }

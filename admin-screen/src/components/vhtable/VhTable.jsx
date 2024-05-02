@@ -4,8 +4,8 @@ import "../../styles/VhTable.css";
 
 const VhTable = ({ vehicles }) => {
   return (
-    <div className="container">
-      <h1 className="table-title">Vista general</h1>
+    <div className="container-vh">
+      <h1 className="table-title-vh">Vista general</h1>
       <div
         className={`table-container ${
           vehicles.length > 10 ? "scrollable" : ""
