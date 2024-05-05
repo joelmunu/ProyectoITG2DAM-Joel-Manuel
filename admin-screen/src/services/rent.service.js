@@ -19,10 +19,22 @@ const getClients = async () => {
   return clientsData.data;
 };
 
+const deleteVehicle = async (matriculaParam) => {
+  const response = axios.delete(`${API_URL}/vehiculo/${matriculaParam}`);
+  return (await response).data.data;
+};
+
+const editVehicle = async (matriculaParam, data) => {
+  const response = axios.put(`${API_URL}/vehiculo/${matriculaParam}`, data);
+  return (await response).data.data;
+};
+
 const RentService = {
   getVistaGeneral,
   getVehicles,
   getClients,
+  deleteVehicle,
+  editVehicle,
 };
 
 export default RentService;

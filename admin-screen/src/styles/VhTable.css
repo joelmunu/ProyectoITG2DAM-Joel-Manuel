@@ -16,7 +16,7 @@ body {
   background-color: hsla(183, 43%, 81%, 0.8); /* Fondo translúcido */
   border-radius: 10px; /* Bordes redondeados */
   padding: 20px; /* Espacio alrededor de la tabla */
-  width: 1320px;
+  width: 1500px;
   margin: 0 auto;
   margin-top: 50px;
 }
@@ -59,4 +59,17 @@ body {
   align-self: flex-start;
   font-weight: bold;
   font-size: 15px;
+}
+
+.btn-edit {
+  color: #edda2a;
+}
+
+.btn-delete {
+  color: #a30d11;
+  margin-left: 20px;
+}
+
+.btn-view {
+  color: #119da4;
 }

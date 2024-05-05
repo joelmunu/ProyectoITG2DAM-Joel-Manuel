@@ -5,11 +5,13 @@ import VgTable from "../vgtable/VgTable";
 import VhTable from "../vhtable/VhTable";
 import ClTable from "../ClTable/ClTable";
 import { Routes, Route } from "react-router-dom";
+import Vehicle from "../vehicle/Vehicle";
 
 const RentApp = () => {
   const [vehicles, setVehicles] = useState([]);
   const [vehicleData, setVehicleData] = useState([]);
   const [clientsData, setClientsData] = useState([]);
+  const [selectedVehicle, setSelectedVehicle] = useState({});
 
   useEffect(() => {
     async function getVistaGeneral() {
@@ -47,6 +49,59 @@ const RentApp = () => {
     getClients();
   }, []);
 
+  const deleteVehicleHandler = async (matriculaParam) => {
+    const newArray = [
+      ...vehicleData.filter(
+        (vehicle) => vehicle.matriculaCar !== matriculaParam
+      ),
+    ];
+    setVehicleData(newArray);
+    await RentService.deleteVehicle(matriculaParam);
+  };
+
+  const editVehicleHandler = async (
+    matriculaParam,
+    Fabricante,
+    Modelo,
+    Motorizacion,
+    Antiguedad,
+    EnMantenimiento,
+    Descripcion,
+    TipoVehiculo,
+    PrecioDia
+  ) => {
+    const newVehicle = {
+      Fabricante,
+      Modelo,
+      Motorizacion,
+      Antiguedad,
+      EnMantenimiento,
+      Descripcion,
+      TipoVehiculo,
+      PrecioDia,
+    };
+
+    const index = vehicleData.findIndex(
+      (vehicle) => vehicle.MatriculaCar === matriculaParam
+    );
+    const newArray = [
+      ...vehicleData.slice(0, index),
+      newVehicle,
+      ...vehicleData.slice(index + 1),
+    ];
+    setVehicleData(newArray);
+    await RentService.editVehicle(matriculaParam, {
+      Fabricante,
+      Modelo,
+      Motorizacion,
+      Antiguedad,
+      EnMantenimiento,
+      Descripcion,
+      TipoVehiculo,
+      PrecioDia,
+    });
+  };
+
   return (
     <div className="ContainerImagen">
       <Routes>
@@ -57,11 +112,22 @@ const RentApp = () => {
 
         <Route
           path="/Vehiculos"
-          element={<VhTable vehicles={vehicleData} />}
+          element={
+            <VhTable
+              vehicles={vehicleData}
+              deleteVehicleHandler={deleteVehicleHandler}
+              editVehicleHandler={editVehicleHandler}
+              setSelectedVehicle={setSelectedVehicle}
+            />
+          }
         ></Route>
         <Route
           path="/Clientes"
           element={<ClTable clients={clientsData} />}
+        ></Route>
+        <Route
+          path="/Vehicle"
+          element={<Vehicle selectedVehicle={selectedVehicle} />}
         ></Route>
       </Routes>
     </div>
