@@ -13,7 +13,7 @@ const VhTable = ({
       <button className="add-vehicle-button"> + Añadir Vehiculo</button>
       <div
         className={`table-container ${
-          vehicles.length > 15 ? "scrollable" : ""
+          vehicles.length > 13 ? "scrollable" : ""
         }`}
       >
         <table className="table table-success table-striped">

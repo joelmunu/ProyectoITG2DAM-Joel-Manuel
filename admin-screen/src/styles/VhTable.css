@@ -16,7 +16,7 @@ body {
   background-color: hsla(183, 43%, 81%, 0.8); /* Fondo translúcido */
   border-radius: 10px; /* Bordes redondeados */
   padding: 20px; /* Espacio alrededor de la tabla */
-  width: 1500px;
+  width: 1320px;
   margin: 0 auto;
   margin-top: 50px;
 }
@@ -45,7 +45,7 @@ body {
   padding: 10px; /* Espaciado interno de celdas */
   text-align: left; /* Alineación del texto a la izquierda */
   border-bottom: 1px solid #ddd; /* Borde inferior de las filas */
-  padding-right: 110px;
+  padding-right: 60px;
 }
 
 .add-vehicle-button {

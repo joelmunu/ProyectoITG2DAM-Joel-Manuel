@@ -1,19 +1,41 @@
 import React from "react";
 import "../../styles/Vehicle.css";
 
-const Vehicle = () => {
+const Vehicle = ({ selectedVehicle }) => {
   return (
     <div className="vehicle-container">
       <div className="column">
         <h2>Detalles del Vehículo</h2>
-        <p>Marca: Toyota</p>
-        <p>Modelo: Corolla</p>
-        <p>Matrícula: ABC123</p>
-        {/* Agrega más detalles del vehículo según sea necesario */}
-      </div>
-      <div className="column">
-        <p>pito</p>
-        {/* Aquí puedes agregar componentes adicionales o información relacionada con el vehículo */}
+        <h3>
+          {selectedVehicle.Fabricante} {selectedVehicle.Modelo}{" "}
+        </h3>
+        <p>
+          <strong>Matrícula</strong>: {selectedVehicle.MatriculaCar}
+        </p>
+        <p>
+          <strong>Fabricante</strong>: {selectedVehicle.Fabricante}
+        </p>
+        <p>
+          <strong>Modelo</strong>: {selectedVehicle.Modelo}
+        </p>
+        <p>
+          <strong>Motorización</strong>: {selectedVehicle.Motorizacion}
+        </p>
+        <p>
+          <strong>Antigüedad</strong>: {selectedVehicle.Antiguedad}
+        </p>
+        <p>
+          <strong>En Mantenimiento</strong>: Sí
+        </p>
+        <p>
+          <strong>Descripción</strong>: {selectedVehicle.Descripcion}
+        </p>
+        <p>
+          <strong>Tipo de vehiculo</strong>: {selectedVehicle.TipoVehiculo}
+        </p>
+        <p>
+          <strong>Precio/dia</strong>: 75€
+        </p>
       </div>
     </div>
   );
