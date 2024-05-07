@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import VgTable from "../vgtable/VgTable";
 import VhTable from "../vhtable/VhTable";
 import ClTable from "../ClTable/ClTable";
+
 import { Routes, Route } from "react-router-dom";
 import Vehicle from "../vehicle/Vehicle";
 
@@ -109,7 +110,6 @@ const RentApp = () => {
           path="/VistaGeneral"
           element={<VgTable vehicles={vehicles} />}
         ></Route>
-
         <Route
           path="/Vehiculos"
           element={
