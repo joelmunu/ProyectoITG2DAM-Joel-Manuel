@@ -1,0 +1,27 @@
+/* General styles */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+/* Vehicle container styles */
+.vehicle-container {
+  display: flex; /* Cambiar a flex para centrar horizontalmente */
+  align-items: center;
+  justify-content: center; /* Center content vertically */
+  justify-items: center; /* Center items horizontally */
+  height: 100vh; /* Cubrir toda la altura de la pantalla */
+  width: 100vw; /* Cubrir todo el ancho de la pantalla */
+}
+
+/* Column styles */
+.column {
+  /* Remove flex-direction */
+  width: 50%;
+  padding: 20px;
+  background-color: hsla(183, 43%, 81%, 0.8); /* Fondo translúcido */
+  border-radius: 10px; /* Bordes redondeados */
+  margin: 0 auto; /* Centrar horizontalmente */
+  margin-bottom: 50px; /* Subir la tarjeta 50 píxeles */
+}

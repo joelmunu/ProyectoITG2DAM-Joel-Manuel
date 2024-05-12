@@ -1,0 +1,75 @@
+/* Estilos para la página */
+body {
+  background-image: url(../assets/background-image.png);
+  background-size: cover;
+  font-family: Arial, sans-serif; /* Fuente predeterminada */
+  color: #ffff;
+  font-size: 20px;
+}
+
+.container-vh {
+  display: flex; /* Usa flexbox para centrar contenido */
+  flex-direction: column; /* Alinear contenido en columna */
+  align-items: center; /* Centra horizontalmente */
+  padding: 20px; /* Espacio alrededor del contenido */
+  text-align: center; /* Centra el texto */
+  background-color: hsla(183, 43%, 81%, 0.8); /* Fondo translúcido */
+  border-radius: 10px; /* Bordes redondeados */
+  padding: 20px; /* Espacio alrededor de la tabla */
+  width: 1320px;
+  margin: 0 auto;
+  margin-top: 50px;
+}
+
+/* Estilos para el título */
+.title {
+  margin-bottom: 20px; /* Espacio entre el título y la tabla */
+}
+
+/* Estilos para el contenedor de la tabla */
+
+/* Estilos para el contenedor de desplazamiento */
+.table-container.scrollable {
+  max-height: 500px; /* Altura máxima antes de que aparezca el scroll */
+  overflow-y: auto; /* Scroll vertical si es necesario */
+}
+
+/* Estilos para la tabla */
+.table {
+  width: 100%; /* Ancho completo */
+  border-collapse: collapse; /* Combina los bordes de las celdas */
+}
+
+.table th,
+.table td {
+  padding: 10px; /* Espaciado interno de celdas */
+  text-align: left; /* Alineación del texto a la izquierda */
+  border-bottom: 1px solid #ddd; /* Borde inferior de las filas */
+  padding-right: 60px;
+}
+
+.add-vehicle-button {
+  background-color: #119da4; /* Color de fondo verde */
+  color: white; /* Color de texto blanco */
+  padding: 12px 20px; /* Acolchado interno */
+  border: none; /* Sin borde */
+  border-radius: 4px; /* Bordes redondeados */
+  cursor: pointer; /* Puntero del cursor como mano */
+  margin-bottom: 5px; /* Margen superior */
+  align-self: flex-start;
+  font-weight: bold;
+  font-size: 15px;
+}
+
+.btn-edit {
+  color: #edda2a;
+}
+
+.btn-delete {
+  color: #a30d11;
+  margin-left: 20px;
+}
+
+.btn-view {
+  color: #119da4;
+}

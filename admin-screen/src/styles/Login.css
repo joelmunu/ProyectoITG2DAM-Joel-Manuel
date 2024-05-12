@@ -1,0 +1,64 @@
+/* Vehicle container styles */
+.containera {
+  display: flex; /* Cambiar a flex para centrar horizontalmente */
+  align-items: center;
+  justify-content: center; /* Center content vertically */
+  justify-items: center; /* Center items horizontally */
+  height: 100vh; /* Cubrir toda la altura de la pantalla */
+  width: 100vw; /* Cubrir todo el ancho de la pantalla */
+}
+
+/* Column styles */
+.column {
+  width: 50%;
+  padding: 20px;
+  background-color: hsla(183, 43%, 81%, 0.8);
+  border-radius: 10px;
+  display: grid; /* Utilizar un diseño de cuadrícula */
+  grid-template-columns: 1fr; /* Una sola columna */
+}
+
+/* Estilos para el segundo label */
+.column label:nth-child(3) {
+  grid-column: 1; /* Colocar en la primera columna */
+  grid-row: 3; /* Colocar en la tercera fila */
+  margin-top: 10px; /* Agregar margen superior */
+}
+
+/* Estilos para el segundo input */
+.column input:nth-child(4) {
+  grid-column: 1; /* Colocar en la primera columna */
+  grid-row: 4; /* Colocar en la cuarta fila */
+  margin-top: 10px; /* Agregar margen superior */
+}
+
+.input-field {
+  display: block;
+  width: 100%;
+  padding: 16px;
+  margin-top: 6px;
+  margin-bottom: 16px;
+  border: 1px solid #80ded9;
+  background-color: #80ded9;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.column h1 {
+  text-align: center; /* Centrar el título */
+}
+
+.column button {
+  display: block; /* Hacer que el botón sea un bloque */
+  margin: 0 auto; /* Para centrar el botón */
+  margin-top: 40px;
+}
+
+.custom-button {
+  background-color: #3066be;
+  width: 179px;
+  height: 60px;
+  border-radius: 10px;
+  border: none;
+  color: #fff;
+}
