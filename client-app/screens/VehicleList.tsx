@@ -1,123 +1,54 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, FlatList, Image } from 'react-native';
 import appColors from '../assets/styles/appColors';
+import { getVehicleData, Vehicle } from '../services/RentService'; // Assuming your API functions are in api.ts
 
-interface Vehicle {
-  fabricante: string;
-  modelo: string;
-  motorizacion: string;
-  precioDia: number;
-}
+interface Props {}
 
-interface Props {
-  vhData: Vehicle[];
-}
+const VehicleList: React.FC<Props> = () => {
+  const [vehicleData, setVehicleData] = useState<Vehicle[]>([]);
 
-const VehicleList: React.FC<Props> = ({ vhData }) => {
-  // Datos de ejemplo
-  const datosEjemplo: Vehicle[] = [
-    {
-      fabricante: 'Ford',
-      modelo: 'Focus',
-      motorizacion: 'Gasolina',
-      precioDia: 50,
-    },
-    {
-      fabricante: 'Toyota',
-      modelo: 'Corolla',
-      motorizacion: 'Híbrido',
-      precioDia: 60,
-    },
-    
-    {
-      fabricante: 'Toyota',
-      modelo: 'Corolla',
-      motorizacion: 'Híbrido',
-      precioDia: 60,
-    },
-    
-    {
-      fabricante: 'Toyota',
-      modelo: 'Corolla',
-      motorizacion: 'Híbrido',
-      precioDia: 60,
-    },
-    
-    {
-      fabricante: 'Toyota',
-      modelo: 'Corolla',
-      motorizacion: 'Híbrido',
-      precioDia: 60,
-    },
-    
-    {
-      fabricante: 'Toyota',
-      modelo: 'Corolla',
-      motorizacion: 'Híbrido',
-      precioDia: 60,
-    },
-    {
-      fabricante: 'Toyota',
-      modelo: 'Corolla',
-      motorizacion: 'Híbrido',
-      precioDia: 60,
-    },
-    {
-      fabricante: 'Toyota',
-      modelo: 'Corolla',
-      motorizacion: 'Híbrido',
-      precioDia: 60,
-    },
-    {
-      fabricante: 'Toyota',
-      modelo: 'Corolla',
-      motorizacion: 'Híbrido',
-      precioDia: 60,
-    },
-    {
-      fabricante: 'Toyota',
-      modelo: 'Corolla',
-      motorizacion: 'Híbrido',
-      precioDia: 60,
-    },
-    {
-      fabricante: 'Toyota',
-      modelo: 'Corolla',
-      motorizacion: 'Híbrido',
-      precioDia: 60,
-    },
-    // Agrega más datos de ejemplo aquí según sea necesario
-  ];
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getVehicleData();
+        setVehicleData(data);
+      } catch (error) {
+        console.error('Error fetching vehicle data:', error);
+      }
+    };
+    fetchData();
+  }, []);
 
-  // Combinar datos de ejemplo solo si vhData está definido
-  const datosCompletos = vhData ? [...datosEjemplo, ...vhData] : datosEjemplo;
+  const imageMap : any = {
+    focus: require('../assets/focus.png'),
+    corolla: require('../assets/corolla.png'),
+    arona: require('../assets/aronafr.png'),
+    ibiza: require('../assets/ibiza.png'),
+    formentor: require('../assets/formentor.png'),
+    gladiator: require('../assets/gladiator.png'),
+  };
 
-  // Función para obtener la ruta de la imagen según el modelo del coche
   const obtenerImagen = (modelo: string) => {
-    switch (modelo.toLowerCase()) {
-      case 'focus':
-        return require('../assets/focus.png');
-      case 'corolla':
-        return require(`../assets/corolla.png`);
-      
-    }
+    const normalizedModelo = modelo.toLowerCase();
+    return imageMap[normalizedModelo] || require('../assets/default.png');
   };
 
   return (
     <View style={styles.container}>
       <FlatList
         style={styles.cardContainer}
-        data={datosCompletos}
+        data={vehicleData}
         renderItem={({ item }) => (
           <View style={styles.card}>
             <View style={styles.vhInfo}>
-              <Image style={styles.image} source={obtenerImagen(item.modelo)} />
+              <Image style={styles.image} source={obtenerImagen(item.Modelo)} />
               <View style={styles.verticalLine}></View>
               <View style={styles.vhProperties}>
-                <Text style={styles.text}>{item.fabricante}</Text>
-                <Text style={styles.text}>{item.modelo}</Text>
-                <Text style={styles.text}>{item.motorizacion}</Text>
-                <Text style={styles.priceText}>{`Precio por día: ${item.precioDia}€`}</Text>
+                <Text style={styles.text}>{item.Fabricante}</Text>
+                <Text style={styles.text}>{item.Modelo}</Text>
+                <Text style={styles.text}>{item.Motorizacion}</Text>
+                <Text style={styles.priceText}>{`Precio por día: ${item.PrecioDia}€`}</Text>
               </View>
             </View>
           </View>
@@ -130,15 +61,10 @@ const VehicleList: React.FC<Props> = ({ vhData }) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 1, // Ensure parent view has flex: 1
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20,
   },
   card: {
     backgroundColor: appColors.secondary,
@@ -146,16 +72,12 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 10,
   },
-  cardText: {
-    fontSize: 15,
-    marginBottom: 5,
-    color: appColors.titleColor,
-  },
   cardContainer: {
     width: '100%',
-    height: '88%',
-    padding: 20,
-    marginVertical: 10,
+    // Remove or adjust bottom padding if needed
+    padding: 20, // Adjust padding as needed
+    
+    flex: 1, // Allow FlatList to expand and scroll
   },
   vhInfo: {
     flexDirection: 'row',
@@ -163,7 +85,7 @@ const styles = StyleSheet.create({
   image: {
     height: 100,
     width: 180,
-    marginLeft: -20,
+    marginLeft: -16,
   },
   verticalLine: {
     width: 1,
@@ -186,4 +108,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default VehicleList as React.ComponentType<any>;
+export default VehicleList;
