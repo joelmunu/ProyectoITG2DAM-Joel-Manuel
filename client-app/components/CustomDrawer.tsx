@@ -4,6 +4,7 @@ import appColors from '../assets/styles/appColors';
 import VehicleList from '../screens/VehicleList';
 import UserProfile from '../screens/UserProfile';
 import VehicleScreen from '../screens/VehicleScreen';
+import RentScreen from '../screens/RentScreen';
 
 const Drawer = createDrawerNavigator();
 
@@ -32,6 +33,7 @@ const CustomDrawer = () => {
       <Drawer.Screen name='Lista de Vehículos' component={VehicleList} options={{ title: 'Lista de Vehículos' }} />
       <Drawer.Screen name='Perfil de usuario' component={UserProfile} options={{ title: 'Perfil de usuario' }} />
       <Drawer.Screen name='Vehiculo' component={VehicleScreen} options={{ title: 'Vehiculo' }} />
+      <Drawer.Screen name='Detalles del pago' component={RentScreen} options={{ title: 'Detalles del pago' }} />
     </Drawer.Navigator>
     </View>
   );
