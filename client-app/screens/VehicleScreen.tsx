@@ -5,9 +5,9 @@ import { NavigationProp, ParamListBase } from "@react-navigation/native";
 
 const VehicleScreen = ({
     navigation,
-  }: {
+}: {
     navigation: NavigationProp<ParamListBase>;
-  }) => {
+}) => {
     const [fechaInicioInput, setFechaInicioInput] = useState('');
     const [fechaFinInput, setFechaFinInput] = useState('');
 
@@ -25,16 +25,20 @@ const VehicleScreen = ({
         return imageMap[normalizedModelo] || require('../assets/default.png');
     };
 
-    const startDateHandler = (fechaInicio : string) => {
+    const startDateHandler = (fechaInicio: string) => {
         setFechaInicioInput(fechaInicio);
     }
 
-    const endDateHandler = (fechaFin : string) => {
+    const endDateHandler = (fechaFin: string) => {
         setFechaFinInput(fechaFin);
     }
 
     function navigateToRent() {
         navigation.navigate('Detalles del pago');
+    }
+
+    function navigateToVehicleList() {
+        navigation.navigate('Lista de Vehículos');
     }
 
     return (
@@ -64,9 +68,14 @@ const VehicleScreen = ({
                     placeholder="Fecha de fin (DD/MM/YYYY)"
                     onChangeText={endDateHandler}
                 />
-                <TouchableOpacity style={styles.button} onPress={() => navigateToRent()}>
-                    <Text style={styles.buttonText}>Alquilar</Text>
-                </TouchableOpacity>
+                <View style={styles.buttonContainer}>
+                    <TouchableOpacity style={[styles.button, styles.returnButton]} onPress={() => navigateToVehicleList()}>
+                        <Text style={styles.buttonText}>Volver</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.button} onPress={() => navigateToRent()}>
+                        <Text style={styles.buttonText}>Alquilar</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
         </View>
     );
@@ -135,14 +144,23 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
         minHeight: 50
     },
+    buttonContainer: {
+        flexDirection: "row",
+        alignSelf: "center",
+        alignContent:  'space-evenly',
+    },
     button: {
         backgroundColor: '#3066BE',
         padding: 10,
         borderRadius: 5,
         marginTop: 50,
+        marginRight: 20,
         alignItems: 'center',
         width: "33%",
         alignSelf: "center"
+    },
+    returnButton: {
+        backgroundColor: appColors.errorColor
     },
     buttonText: {
         color: 'white',

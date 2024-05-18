@@ -1,4 +1,4 @@
-const API_URL = 'http://172.16.100.232:8000/api/v1/rentacartf';
+const API_URL = 'http://192.168.0.21:8000/api/v1/rentacartf';
 const VEHICLES_PATH = '/vehiculos';
 
 type VehicleJsonResponse = {

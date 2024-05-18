@@ -1,8 +1,14 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
 import React from 'react'
 import appColors from '../assets/styles/appColors'
+import { NavigationProp, ParamListBase } from '@react-navigation/core'
 
-const RentScreen = () => {
+const RentScreen = ({
+    navigation,
+}: {
+    navigation: NavigationProp<ParamListBase>;
+}) => {
+
     const imageMap: any = {
         focus: require('../assets/focus.png'),
         corolla: require('../assets/corolla.png'),
@@ -16,6 +22,10 @@ const RentScreen = () => {
         const normalizedModelo = modelo.toLowerCase();
         return imageMap[normalizedModelo] || require('../assets/default.png');
     };
+
+    function navigateToVehicle() {
+        navigation.navigate('Vehiculo');
+    }
 
     return (
         <View style={styles.container}>
@@ -50,9 +60,14 @@ const RentScreen = () => {
                 <Text style={styles.text}>
                     Saldo tras el alquiler: 90 €
                 </Text>
-                <TouchableOpacity style={styles.button}>
-                    <Text style={styles.buttonText}>Alquilar</Text>
-                </TouchableOpacity>
+                <View style={styles.buttonContainer}>
+                    <TouchableOpacity style={[styles.button, styles.returnButton]} onPress={() => navigateToVehicle()}>
+                        <Text style={styles.buttonText}>Volver</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.button}>
+                        <Text style={styles.buttonText}>Alquilar</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
 
         </View>
@@ -127,14 +142,23 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         marginTop: 10,
     },
+    buttonContainer: {
+        flexDirection: "row",
+        alignSelf: "center",
+        alignContent: 'space-evenly',
+    },
     button: {
         backgroundColor: '#3066BE',
         padding: 10,
         borderRadius: 5,
-        marginTop: 30,
+        marginTop: 50,
+        marginRight: 20,
         alignItems: 'center',
         width: "33%",
         alignSelf: "center"
+    },
+    returnButton: {
+        backgroundColor: appColors.errorColor
     },
     buttonText: {
         color: 'white',

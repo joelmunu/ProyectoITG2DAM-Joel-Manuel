@@ -52,12 +52,12 @@ const CustomDrawer = () => {
         <Drawer.Screen
           name="Vehiculo"
           component={VehicleScreen}
-          options={{ title: "Vehiculo" }}
+          options={{ title: "Vehiculo", drawerItemStyle: { display: 'none' } }}
         />
         <Drawer.Screen
           name="Detalles del pago"
           component={RentScreen}
-          options={{ title: "Detalles del pago" }}
+          options={{ title: "Detalles del pago", drawerItemStyle: { display: 'none' }}}
         />
         <Drawer.Screen
           name="Bienvenida"
@@ -72,12 +72,12 @@ const CustomDrawer = () => {
         <Drawer.Screen
           name="Register"
           component={RegisterScreen}
-          options={{ title: "Register" }}
+          options={{ title: "Register"}}
         />
       </Drawer.Navigator>
-    </View>
-  );
-};
+      </View>
+  )
+}
 
 export default CustomDrawer;
 

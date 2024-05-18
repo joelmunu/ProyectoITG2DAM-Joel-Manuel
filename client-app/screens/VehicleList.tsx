@@ -39,8 +39,8 @@ const VehicleList = ({
     return imageMap[normalizedModelo] || require('../assets/default.png');
   };
 
-  function navigateToVehicle(): void {
-    navigation.navigate('VehicleScreen');
+  function navigateToVehicle() {
+    navigation.navigate('Vehiculo');
   }
 
   return (
