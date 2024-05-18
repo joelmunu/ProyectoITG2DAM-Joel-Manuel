@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, FlatList, Image } from 'react-native';
+import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity, Pressable } from 'react-native';
 import appColors from '../assets/styles/appColors';
 import { getVehicleData, Vehicle } from '../services/RentService'; // Assuming your API functions are in api.ts
+import { NavigationProp, ParamListBase } from "@react-navigation/native";
 
-interface Props {}
+interface Props { }
 
-const VehicleList: React.FC<Props> = () => {
+const VehicleList = ({
+  navigation,
+}: {
+  navigation: NavigationProp<ParamListBase>;
+}) => {
   const [vehicleData, setVehicleData] = useState<Vehicle[]>([]);
 
   useEffect(() => {
@@ -20,7 +25,7 @@ const VehicleList: React.FC<Props> = () => {
     fetchData();
   }, []);
 
-  const imageMap : any = {
+  const imageMap: any = {
     focus: require('../assets/focus.png'),
     corolla: require('../assets/corolla.png'),
     arona: require('../assets/aronafr.png'),
@@ -34,24 +39,30 @@ const VehicleList: React.FC<Props> = () => {
     return imageMap[normalizedModelo] || require('../assets/default.png');
   };
 
+  function navigateToVehicle(): void {
+    navigation.navigate('VehicleScreen');
+  }
+
   return (
     <View style={styles.container}>
       <FlatList
         style={styles.cardContainer}
         data={vehicleData}
         renderItem={({ item }) => (
-          <View style={styles.card}>
-            <View style={styles.vhInfo}>
-              <Image style={styles.image} source={obtenerImagen(item.Modelo)} />
-              <View style={styles.verticalLine}></View>
-              <View style={styles.vhProperties}>
-                <Text style={styles.text}>{item.Fabricante}</Text>
-                <Text style={styles.text}>{item.Modelo}</Text>
-                <Text style={styles.text}>{item.Motorizacion}</Text>
-                <Text style={styles.priceText}>{`Precio por día: ${item.PrecioDia}€`}</Text>
+          <Pressable onPress={() => navigateToVehicle()}>
+            <View style={styles.card}>
+              <View style={styles.vhInfo}>
+                <Image style={styles.image} source={obtenerImagen(item.Modelo)} />
+                <View style={styles.verticalLine}></View>
+                <View style={styles.vhProperties}>
+                  <Text style={styles.text}>{item.Fabricante}</Text>
+                  <Text style={styles.text}>{item.Modelo}</Text>
+                  <Text style={styles.text}>{item.Motorizacion}</Text>
+                  <Text style={styles.priceText}>{`Precio por día: ${item.PrecioDia}€`}</Text>
+                </View>
               </View>
             </View>
-          </View>
+          </Pressable>
         )}
         keyExtractor={(item, index) => index.toString()}
       />
@@ -76,7 +87,7 @@ const styles = StyleSheet.create({
     width: '100%',
     // Remove or adjust bottom padding if needed
     padding: 20, // Adjust padding as needed
-    
+
     flex: 1, // Allow FlatList to expand and scroll
   },
   vhInfo: {

@@ -25,3 +25,17 @@ body {
   margin: 0 auto; /* Centrar horizontalmente */
   margin-bottom: 50px; /* Subir la tarjeta 50 píxeles */
 }
+
+.button {
+  background-color: #119da4; /* Color de fondo verde */
+  color: white; /* Color de texto blanco */
+  padding: 12px 20px; /* Acolchado interno */
+  border: none; /* Sin borde */
+  border-radius: 4px; /* Bordes redondeados */
+  cursor: pointer; /* Puntero del cursor como mano */
+  margin-top: 8px;
+  margin-left: 8px;
+  align-self: flex-start;
+  font-weight: bold;
+  font-size: 15px;
+}

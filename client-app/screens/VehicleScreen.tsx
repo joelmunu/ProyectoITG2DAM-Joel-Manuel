@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, Alert, TextInput } from 'react-native';
-import DateTimePicker from '@react-native-community/datetimepicker';
 import appColors from '../assets/styles/appColors';
+import { NavigationProp, ParamListBase } from "@react-navigation/native";
 
-const VehicleScreen = () => {
+const VehicleScreen = ({
+    navigation,
+  }: {
+    navigation: NavigationProp<ParamListBase>;
+  }) => {
     const [fechaInicioInput, setFechaInicioInput] = useState('');
     const [fechaFinInput, setFechaFinInput] = useState('');
 
@@ -27,6 +31,10 @@ const VehicleScreen = () => {
 
     const endDateHandler = (fechaFin : string) => {
         setFechaFinInput(fechaFin);
+    }
+
+    function navigateToRent() {
+        navigation.navigate('Detalles del pago');
     }
 
     return (
@@ -56,7 +64,7 @@ const VehicleScreen = () => {
                     placeholder="Fecha de fin (DD/MM/YYYY)"
                     onChangeText={endDateHandler}
                 />
-                <TouchableOpacity style={styles.button}>
+                <TouchableOpacity style={styles.button} onPress={() => navigateToRent()}>
                     <Text style={styles.buttonText}>Alquilar</Text>
                 </TouchableOpacity>
             </View>
