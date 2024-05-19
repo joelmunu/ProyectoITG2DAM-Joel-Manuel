@@ -52,18 +52,19 @@ const editVistaGeneral = async (modelo, matricula) => {
 }
 
 const getClients = async () => {
-    const sql = "SELECT * FROM cliente"
+    const sql = "SELECT dni, nombre, apellidos, email, saldo, inicioAlquiler, finAlquiler, matriculaAlq FROM cliente"
     const [results] = await db.query(sql);
 
     return results;
 }
 
 const getClientByDNI = async (dni) => {
-    const sql = "SELECT * FROM cliente WHERE DNI=?"
+    const sql = "SELECT dni, nombre, apellidos, email, saldo, inicioAlquiler, finAlquiler, matriculaAlq FROM cliente WHERE DNI=?"
     const [results] = await db.query(sql, dni);
 
     return results;
 }
+
 
 const addClient = async (dni, nombre, apellidos, email, password) => {
     const sql = "INSERT INTO cliente VALUES(?, ?, ?, ?, ?, 0, null, null, '')";
