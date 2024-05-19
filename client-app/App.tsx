@@ -4,6 +4,7 @@ import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native';
 import CustomDrawer from './components/CustomDrawer';
 import Header from './components/Header';
+import appColors from './assets/styles/appColors';
 
 export default function App() {
   return (
@@ -20,5 +21,6 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     height: "100%",
+    backgroundColor: appColors.backgroundColor
   },
 });

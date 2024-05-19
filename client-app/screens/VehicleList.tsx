@@ -49,10 +49,10 @@ const VehicleList = ({
         style={styles.cardContainer}
         data={vehicleData}
         renderItem={({ item }) => (
-          <Pressable onPress={() => navigateToVehicle()}>
-            <View style={styles.card}>
+          item.Alquilado ? (
+            <View style={[styles.card, styles.rented]}>
               <View style={styles.vhInfo}>
-                <Image style={styles.image} source={obtenerImagen(item.Modelo)} />
+                <Image style={styles.image} source={require("../assets/default.png")} />
                 <View style={styles.verticalLine}></View>
                 <View style={styles.vhProperties}>
                   <Text style={styles.text}>{item.Fabricante}</Text>
@@ -62,7 +62,22 @@ const VehicleList = ({
                 </View>
               </View>
             </View>
-          </Pressable>
+          ) : (
+            <Pressable onPress={() => navigateToVehicle()}>
+              <View style={styles.card}>
+                <View style={styles.vhInfo}>
+                  <Image style={styles.image} source={obtenerImagen(item.Modelo)} />
+                  <View style={styles.verticalLine}></View>
+                  <View style={styles.vhProperties}>
+                    <Text style={styles.text}>{item.Fabricante}</Text>
+                    <Text style={styles.text}>{item.Modelo}</Text>
+                    <Text style={styles.text}>{item.Motorizacion}</Text>
+                    <Text style={styles.priceText}>{`Precio por día: ${item.PrecioDia}€`}</Text>
+                  </View>
+                </View>
+              </View>
+            </Pressable>
+          )
         )}
         keyExtractor={(item, index) => index.toString()}
       />
@@ -80,6 +95,9 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 10,
     marginBottom: 10,
+  },
+  rented: {
+    backgroundColor: "gray"
   },
   cardContainer: {
     padding: 20,
