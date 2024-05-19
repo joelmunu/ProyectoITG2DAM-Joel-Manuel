@@ -72,10 +72,8 @@ const VehicleList = ({
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1, // Ensure parent view has flex: 1
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: appColors.backgroundColor,
+    flex: 1,
   },
   card: {
     backgroundColor: appColors.secondary,
@@ -84,11 +82,8 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   cardContainer: {
-    width: '100%',
-    // Remove or adjust bottom padding if needed
-    padding: 20, // Adjust padding as needed
-
-    flex: 1, // Allow FlatList to expand and scroll
+    padding: 20,
+    flex: 1,
   },
   vhInfo: {
     flexDirection: 'row',

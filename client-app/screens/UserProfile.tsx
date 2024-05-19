@@ -1,8 +1,13 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import appColors from '../assets/styles/appColors';
+import { NavigationProp, ParamListBase } from '@react-navigation/core';
 
-const UserProfile = () => {
+const UserProfile = ({
+  navigation,
+}: {
+  navigation: NavigationProp<ParamListBase>;
+}) => {
 
   const imageMap: any = {
     focus: require('../assets/focus.png'),
@@ -18,6 +23,10 @@ const UserProfile = () => {
     return imageMap[normalizedModelo] || require('../assets/default.png');
   };
 
+  function navigateToBalance() {
+    navigation.navigate("Balance")
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.card}>
@@ -31,11 +40,11 @@ const UserProfile = () => {
         </View>
       </View>
       <View style={styles.card}>
-        <View style={styles.vhInfo}>
-          <View style={styles.vhProperties}>
-            <Text style={styles.daysText}>200€</Text>
-            <Text style={styles.daysText}>Saldo de Tenerife Rent a Car</Text>
-          </View>
+        <View style={styles.vhProperties}>
+          <Text style={styles.daysText}>Saldo de Tenerife Rent a Car: 200€</Text>
+          <TouchableOpacity style={styles.button} onPress={() => navigateToBalance()}>
+            <Text style={styles.buttonText}>➕  Añadir saldo</Text>
+          </TouchableOpacity>
         </View>
       </View>
       <View style={styles.card}>
@@ -50,8 +59,8 @@ const UserProfile = () => {
             <Text style={styles.daysText}>17/02/24 - 19/02/24</Text>
           </View>
         </View>
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>Cerrar sesión</Text>
+        <TouchableOpacity style={[styles.button, styles.logoutBtn]}>
+          <Text style={[styles.buttonText, styles.logoutBtnText]}>Cerrar sesión</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -61,7 +70,7 @@ const UserProfile = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: appColors.backgroundColor,
     alignItems: 'center',
   },
   card: {
@@ -120,17 +129,24 @@ const styles = StyleSheet.create({
     minHeight: 50
   },
   button: {
-    backgroundColor: appColors.errorColor,
+    backgroundColor: appColors.sucessColor,
     padding: 14,
     borderRadius: 5,
-    marginTop: 50,
+    marginTop: 20,
     alignItems: 'center',
     width: "43%",
     alignSelf: "center"
   },
+  logoutBtn: {
+    backgroundColor: appColors.errorColor,
+    marginTop: 50,
+  },
   buttonText: {
-    color: 'white',
+    color: 'black',
     fontSize: 16,
+  },
+  logoutBtnText: {
+    color: 'white',
   },
 });
 

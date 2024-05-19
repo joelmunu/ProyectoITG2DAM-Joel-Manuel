@@ -11,6 +11,7 @@ import RentScreen from "../screens/RentScreen";
 import WelcomeScreen from "../screens/WelcomeScreen";
 import LoginScreen from "../screens/LoginScreen";
 import RegisterScreen from "../screens/RegisterScreen";
+import BalanceScreen from "../screens/BalanceScreen";
 
 const Drawer = createDrawerNavigator();
 
@@ -57,7 +58,7 @@ const CustomDrawer = () => {
         <Drawer.Screen
           name="Detalles del pago"
           component={RentScreen}
-          options={{ title: "Detalles del pago", drawerItemStyle: { display: 'none' }}}
+          options={{ title: "Detalles del pago", drawerItemStyle: { display: 'none' } }}
         />
         <Drawer.Screen
           name="Bienvenida"
@@ -72,10 +73,15 @@ const CustomDrawer = () => {
         <Drawer.Screen
           name="Register"
           component={RegisterScreen}
-          options={{ title: "Register"}}
+          options={{ title: "Register" }}
+        />
+        <Drawer.Screen
+          name="Balance"
+          component={BalanceScreen}
+          options={{ title: "Balance", drawerItemStyle: { display: 'none' } }}
         />
       </Drawer.Navigator>
-      </View>
+    </View>
   )
 }
 

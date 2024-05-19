@@ -86,8 +86,8 @@ export default VehicleScreen;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
         alignItems: 'center',
+        backgroundColor: appColors.backgroundColor
     },
     card: {
         backgroundColor: appColors.secondary,
@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
     buttonContainer: {
         flexDirection: "row",
         alignSelf: "center",
-        alignContent:  'space-evenly',
+        alignContent: 'space-evenly',
     },
     button: {
         backgroundColor: '#3066BE',

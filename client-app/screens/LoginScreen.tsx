@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
   formContainer: {
     backgroundColor: "rgba(174, 236, 239, 0.5)", // Adds a semitransparent overlay
     width: "80%",
-    height: "45%",
+    height: "55%",
     borderRadius: 9,
     padding: 20, // Add padding to the form container
   },
@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {},
   button: {
-    marginTop: "-10%",
+    marginTop: "-20%",
     width: "60%",
     alignSelf: "center",
     backgroundColor: "#3066BE",
