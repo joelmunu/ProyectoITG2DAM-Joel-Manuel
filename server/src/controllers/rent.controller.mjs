@@ -194,6 +194,70 @@ const deleteVehicle = async (req, res) => {
     }
 }
 
+const rentVehicle = async (req, res) => {
+    const { matricula, dni, InicioAlquiler, FinAlquiler } = req.body;
+
+    if (!dni || !InicioAlquiler || !FinAlquiler) {
+        return res.status(httpCodes.OK).send({
+            statusCode: httpCodes.OK,
+            statusMessage: 'Bad Request',
+            message: 'Error: se requieren todos los parámetros',
+            data: null
+        });
+    }
+
+    try {
+        const data = await rentService.rentVehicle(dni, InicioAlquiler, FinAlquiler, matricula);
+        return res.send({
+            statusCode: httpCodes.OK,
+            statusMessage: 'OK',
+            message: !data || data.length === 0
+                ? 'Error: No se encuentra el vehículo que se desea alquilar'
+                : 'Vehículo modificado correctamente',
+            data
+        });
+    } catch (error) {
+        return res.status(httpCodes.INTERNAL_SERVER_ERROR).send({
+            statusCode: httpCodes.INTERNAL_SERVER_ERROR,
+            statusMessage: 'Internal Server Error',
+            message: null,
+            data: null
+        });
+    }
+};
+
+const cancelRent = async (req, res) => {
+    const { matricula, dni } = req.body;
+
+    if (!dni || !matricula) {
+        return res.status(httpCodes.OK).send({
+            statusCode: httpCodes.OK,
+            statusMessage: 'Bad Request',
+            message: 'Error: se requieren todos los parámetros',
+            data: null
+        });
+    }
+
+    try {
+        const data = await rentService.cancelRent(dni, matricula);
+        return res.send({
+            statusCode: httpCodes.OK,
+            statusMessage: 'OK',
+            message: !data || data.length === 0
+                ? 'Error: No se encuentra el vehículo que se desea alquilar'
+                : 'Vehículo modificado correctamente',
+            data
+        });
+    } catch (error) {
+        return res.status(httpCodes.INTERNAL_SERVER_ERROR).send({
+            statusCode: httpCodes.INTERNAL_SERVER_ERROR,
+            statusMessage: 'Internal Server Error',
+            message: null,
+            data: null
+        });
+    }
+}
+
 const getClients = async (req, res) => {
     if (!req.query.name) {
         try {
@@ -305,6 +369,41 @@ const editClient = async (req, res) => {
 
     try {
         const data = await rentService.editClient(dniParam, nombre, apellidos, email);
+        res.send({
+            statusCode: httpCodes.OK,
+            statusMessage: 'OK',
+            message:
+                !data || data.length === 0
+                    ? 'Error: No se encuentra el cliente que se desea editar'
+                    : 'Vehículo modificado correctamente',
+            data
+        });
+    } catch (error) {
+        res.status(httpCodes.INTERNAL_SERVER_ERROR)
+            .send({
+                statusCode: httpCodes.INTERNAL_SERVER_ERROR,
+                statusMessage: 'Internal Server Error',
+                message: null,
+                data: null
+            });
+    }
+}
+
+const updateBalance = async(req, res) => {
+    const { dni, Saldo } = req.body;
+
+    if (!dni || !Saldo) {
+        res.status(httpCodes.OK)
+            .send({
+                statusCode: httpCodes.OK,
+                statusMessage: 'Bad Request',
+                message: 'Error: se requieren todos los parámetros',
+                data: null
+            });
+    };
+
+    try {
+        const data = await rentService.updateBalance(dni, Saldo);
         res.send({
             statusCode: httpCodes.OK,
             statusMessage: 'OK',
@@ -473,10 +572,13 @@ export default {
     addVehicle,
     editVehicle,
     deleteVehicle,
+    rentVehicle,
+    cancelRent,
     getClients,
     getClientByDNI,
     addClient,
     editClient,
+    updateBalance,
     deleteClient,
     getMaintenance,
     addMaintenance,
