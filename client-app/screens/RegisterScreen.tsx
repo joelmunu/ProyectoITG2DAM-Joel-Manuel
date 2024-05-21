@@ -52,7 +52,8 @@ const RegisterScreen = () => {
       Nombre: usernameInput,
       Apellidos: surnameInput,
       email: emailInput,
-      password: passwordInput
+      password: passwordInput,
+      Saldo: 0
     };
 
     if (user.Nombre === '' || user.DNI === '' || user.Apellidos === '' || user.email === '' || user.password === '') {

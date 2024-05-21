@@ -8,6 +8,7 @@ interface User {
     Apellidos: string;
     email: string;
     password: string;
+    Saldo: number;
 }
 
 interface ApiResponse<T> {

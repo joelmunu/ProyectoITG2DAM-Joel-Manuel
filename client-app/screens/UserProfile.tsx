@@ -82,7 +82,7 @@ const UserProfile = ({
       </View>
       <View style={styles.card}>
         <View style={styles.vhProperties}>
-          <Text style={styles.daysText}>Saldo de Tenerife Rent a Car: {user?.Saldo}</Text>
+          <Text style={styles.daysText}>Saldo de Tenerife Rent a Car: {user?.Saldo} €</Text>
           <TouchableOpacity style={styles.button} onPress={() => navigateToBalance()}>
             <Text style={styles.buttonText}>➕  Añadir saldo</Text>
           </TouchableOpacity>

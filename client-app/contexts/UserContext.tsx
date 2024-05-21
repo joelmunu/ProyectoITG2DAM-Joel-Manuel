@@ -5,7 +5,7 @@ interface User {
     Nombre: string;
     Apellidos: string;
     email: string;
-    Saldo?: number | null;
+    Saldo: number;
     InicioAlquiler?: string | null;
     FinAlquiler?: string | null;
     MatriculaAlq?: string | null;
