@@ -25,7 +25,8 @@ a {
   font-size: 30px;
   color: #ffff;
   font-weight: bold;
-  /* Margin-right not needed anymore */
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 .logout-btn {
