@@ -1,13 +1,54 @@
-import React from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import React, { useContext } from 'react';
+import { View, Text, StyleSheet, Image, TouchableOpacity, Alert } from 'react-native';
 import appColors from '../assets/styles/appColors';
 import { NavigationProp, ParamListBase } from '@react-navigation/core';
+import { LoginContext } from '../contexts/LoginContext';
+import { useUser } from '../contexts/UserContext';
 
 const UserProfile = ({
   navigation,
 }: {
   navigation: NavigationProp<ParamListBase>;
 }) => {
+
+  const { email, toggleIsUserLogged } = useContext(LoginContext);
+  const { user } = useUser();
+
+  const logoutHandle = () => {
+    toggleIsUserLogged(false);
+    console.log('Log out completed')
+    Alert.alert('Se ha cerrado la sesión ✅', 'Tendrá que iniciar sesión de nuevo para acceder a la app', [
+      {
+        text: 'Iniciar sesión',
+        onPress: () => {
+          navigation.navigate("Inicio de sesión");
+        },
+        style: 'default',
+      },
+      {
+        text: 'OK',
+        onPress: () => {
+          navigation.navigate("Bienvenida");
+        },
+        style: 'default',
+      },
+    ]);
+  };
+
+  const logout = () => {
+    Alert.alert(`⚠️ Se va a cerrar la sesión de ${email}`, 'Para acceder a los datos tendrá que iniciar sesión de nuevo', [
+      {
+        text: 'Cancelar',
+        onPress: () => console.log('Logout canceled'),
+        style: 'cancel',
+      },
+      {
+        text: 'Cerrar sesión',
+        onPress: (logoutHandle),
+        style: 'default',
+      },
+    ]);
+  };
 
   const imageMap: any = {
     focus: require('../assets/focus.png'),
@@ -33,15 +74,15 @@ const UserProfile = ({
         <View style={styles.vhInfo}>
           <View style={styles.vhProperties}>
             <Text style={styles.daysText}>Tu información</Text>
-            <Text style={styles.text}>Nombre: John</Text>
-            <Text style={styles.text}>Apellidos: Doe</Text>
-            <Text style={styles.text}>DNI: 12345678A</Text>
+            <Text style={styles.text}>Nombre: {user?.Nombre}</Text>
+            <Text style={styles.text}>Apellidos: {user?.Apellidos}</Text>
+            <Text style={styles.text}>DNI: {user?.DNI}</Text>
           </View>
         </View>
       </View>
       <View style={styles.card}>
         <View style={styles.vhProperties}>
-          <Text style={styles.daysText}>Saldo de Tenerife Rent a Car: 200€</Text>
+          <Text style={styles.daysText}>Saldo de Tenerife Rent a Car: {user?.Saldo}</Text>
           <TouchableOpacity style={styles.button} onPress={() => navigateToBalance()}>
             <Text style={styles.buttonText}>➕  Añadir saldo</Text>
           </TouchableOpacity>
@@ -56,11 +97,11 @@ const UserProfile = ({
             <Text style={styles.text}>Arona</Text>
             <Text style={styles.text}>1.5 150cv gasolina</Text>
             <Text style={styles.daysText}>Fecha alquiler:</Text>
-            <Text style={styles.daysText}>17/02/24 - 19/02/24</Text>
+            <Text style={styles.daysText}>{user?.InicioAlquiler} - {user?.FinAlquiler}</Text>
           </View>
         </View>
         <TouchableOpacity style={[styles.button, styles.logoutBtn]}>
-          <Text style={[styles.buttonText, styles.logoutBtnText]}>Cerrar sesión</Text>
+          <Text style={[styles.buttonText, styles.logoutBtnText]} onPress={logout}>Cerrar sesión</Text>
         </TouchableOpacity>
       </View>
     </View>

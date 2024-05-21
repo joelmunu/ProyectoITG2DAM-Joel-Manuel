@@ -12,6 +12,8 @@ import WelcomeScreen from "../screens/WelcomeScreen";
 import LoginScreen from "../screens/LoginScreen";
 import RegisterScreen from "../screens/RegisterScreen";
 import BalanceScreen from "../screens/BalanceScreen";
+import { useContext } from "react";
+import { LoginContext } from "../contexts/LoginContext";
 
 const Drawer = createDrawerNavigator();
 
@@ -34,7 +36,33 @@ const CustomDrawer = () => {
     drawerType: "slide",
   };
 
-  return (
+  const { isUserLogged } = useContext(LoginContext);
+
+  return isUserLogged ? (
+    <View style={styles.container}>
+      <Drawer.Navigator
+        initialRouteName="Bienvenida"
+        screenOptions={drawerNavigatorScreenOptions}
+      >
+
+        <Drawer.Screen
+          name="Bienvenida"
+          component={WelcomeScreen}
+          options={{ title: "Bienvenida" }}
+        />
+        <Drawer.Screen
+          name="Inicio de sesión"
+          component={LoginScreen}
+          options={{ title: "Inicio de sesión" }}
+        />
+        <Drawer.Screen
+          name="Registro"
+          component={RegisterScreen}
+          options={{ title: "Registro" }}
+        />
+      </Drawer.Navigator>
+    </View>
+  ) : (
     <View style={styles.container}>
       <Drawer.Navigator
         initialRouteName="Lista de Vehículos"
@@ -61,27 +89,12 @@ const CustomDrawer = () => {
           options={{ title: "Detalles del pago", drawerItemStyle: { display: 'none' } }}
         />
         <Drawer.Screen
-          name="Bienvenida"
-          component={WelcomeScreen}
-          options={{ title: "Bienvenida" }}
-        />
-        <Drawer.Screen
-          name="Login"
-          component={LoginScreen}
-          options={{ title: "Login" }}
-        />
-        <Drawer.Screen
-          name="Register"
-          component={RegisterScreen}
-          options={{ title: "Register" }}
-        />
-        <Drawer.Screen
           name="Balance"
           component={BalanceScreen}
           options={{ title: "Balance", drawerItemStyle: { display: 'none' } }}
         />
       </Drawer.Navigator>
-    </View>
+    </View >
   )
 }
 

@@ -6,11 +6,55 @@ import {
   Pressable,
   ImageBackground,
   TextInput,
+  Alert,
 } from "react-native";
+import { useContext, useState } from 'react';
+import { LoginContext } from '../contexts/LoginContext';
+import { userLogin } from '../services/UserService';
 import appColors from "../assets/styles/appColors";
+import { useUser } from "../contexts/UserContext";
 
 const LoginScreen = () => {
   const image = require("../assets/Background.png");
+
+  const [emailInput, setEmailInput] = useState("");
+  const [passwordInput, setPasswordInput] = useState("");
+  const [loginError, setLoginError] = useState(false);
+  const { toggleIsUserLogged, setEmail } = useContext(LoginContext);
+  const { setUser } = useUser();
+
+  const emailHandle = (username: string) => {
+    setEmailInput(username);
+  };
+
+  const passwordHandle = (password: string) => {
+    setPasswordInput(password);
+  };
+
+  const showFailedLoginAlert = () => {
+    Alert.alert('❌ Error al iniciar sesión', 'Nombre de usuario o contraseña incorrectos');
+  };
+
+  const login = async () => {
+    const user = {
+      email: emailInput,
+      password: passwordInput
+    };
+    let response = await userLogin(user);
+    console.log(response)
+    if ((response.httpCode) == 200) {
+      setUser(response.userData);
+      toggleIsUserLogged();
+      setEmail(emailInput);
+      console.log('Login completed');
+      setLoginError(false);
+    } else {
+      console.log('Login failed');
+      showFailedLoginAlert();
+      setLoginError(true);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <ImageBackground source={image} style={styles.backgroundImage}>
@@ -19,26 +63,32 @@ const LoginScreen = () => {
             <View style={styles.header}>
               <Text style={styles.title}>Iniciar Sesión</Text>
             </View>
-
             <View style={styles.inputContainer}>
+              <Text
+                style={loginError ? ({ ...styles.label, ...styles.labelError }) : (styles.label)}>
+                Correo electrónico:
+              </Text>
               <TextInput
-                style={styles.input}
+                style={loginError ? ({ ...styles.input, ...styles.inputError }) : (styles.input)}
                 placeholder="Correo electrónico"
                 placeholderTextColor="gray"
                 keyboardType="email-address"
                 autoCapitalize="none"
+                onChangeText={emailHandle}
               />
+              <Text style={loginError ? ({ ...styles.label, ...styles.labelError }) : (styles.label)}>Contraseña:</Text>
               <TextInput
-                style={styles.input}
+                style={loginError ? ({ ...styles.input, ...styles.inputError }) : (styles.input)}
                 placeholder="Contraseña"
                 placeholderTextColor="gray"
                 secureTextEntry={true}
                 autoCapitalize="none"
+                onChangeText={passwordHandle}
               />
             </View>
 
             <View style={styles.buttonContainer}>
-              <Pressable style={styles.button}>
+              <Pressable style={styles.button} onPress={login}>
                 <Text style={styles.buttonText}>Iniciar Sesión</Text>
               </Pressable>
             </View>
@@ -67,7 +117,7 @@ const styles = StyleSheet.create({
   formContainer: {
     backgroundColor: "rgba(174, 236, 239, 0.5)", // Adds a semitransparent overlay
     width: "80%",
-    height: "55%",
+    height: 418,
     borderRadius: 9,
     padding: 20, // Add padding to the form container
   },
@@ -85,10 +135,14 @@ const styles = StyleSheet.create({
   input: {
     backgroundColor: appColors.accentColor,
     borderRadius: 5,
-    height: "25%",
+    height: "20%",
     paddingHorizontal: 10,
     marginBottom: 30,
     color: "black",
+  },
+  inputError: {
+    borderColor: appColors.errorColor,
+    borderWidth: 2
   },
   buttonContainer: {},
   button: {
@@ -103,5 +157,15 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 16,
     textAlign: "center",
+  },
+  label: {
+    fontSize: 16,
+    marginLeft: 5,
+    marginBottom: 5,
+    color: appColors.titleColor,
+    fontWeight: 'bold'
+  },
+  labelError: {
+    color: appColors.errorColor
   },
 });

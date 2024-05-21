@@ -6,8 +6,20 @@ import {
   Pressable,
   ImageBackground,
 } from "react-native";
+import { NavigationProp, ParamListBase } from '@react-navigation/native';
 
-const WelcomeScreen = () => {
+const WelcomeScreen = ({ navigation }: {
+  navigation: NavigationProp<ParamListBase>
+}) => {
+
+  const navigateToLogin = () => {
+    navigation.navigate("Inicio de sesión");
+  };
+
+  const navigateToRegister = () => {
+    navigation.navigate("Registro");
+  };
+
   const image = require("../assets/Background.png");
   return (
     <View style={styles.container}>
@@ -18,10 +30,10 @@ const WelcomeScreen = () => {
           </View>
 
           <View style={styles.buttonContainer}>
-            <Pressable style={styles.button}>
+            <Pressable style={styles.button} onPress={navigateToRegister}>
               <Text style={styles.buttonText}>Registrarse</Text>
             </Pressable>
-            <Pressable style={styles.button}>
+            <Pressable style={styles.button} onPress={navigateToLogin}>
               <Text style={styles.buttonText}>Iniciar Sesión</Text>
             </Pressable>
           </View>
@@ -57,14 +69,14 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   buttonContainer: {
-    flex: 1,
+    flex: 1.5,
   },
   button: {
     backgroundColor: "#3066BE",
     paddingVertical: 20,
     paddingHorizontal: 30,
     borderRadius: 5,
-    marginBottom: 10,
+    marginBottom: 20,
   },
   buttonText: {
     color: "white",
