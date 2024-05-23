@@ -84,7 +84,7 @@ const VehicleList = ({
 const styles = StyleSheet.create({
   container: {
     backgroundColor: appColors.backgroundColor,
-    flex: 1,
+    alignItems: "center"
   },
   card: {
     backgroundColor: appColors.secondary,
@@ -96,8 +96,9 @@ const styles = StyleSheet.create({
     backgroundColor: "gray"
   },
   cardContainer: {
-    padding: 20,
-    flex: 1,
+    marginTop: 15,
+    marginBottom: 15,
+    width: "93%"
   },
   vhInfo: {
     flexDirection: 'row',

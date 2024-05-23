@@ -18,8 +18,7 @@ const BalanceScreen = ({
   navigation: NavigationProp<ParamListBase>;
 }) => {
   const { user, setUser } = useUser();
-  const [balanceInput, setBalanceInput] = useState<string>('');
-  const [newBalance, setNewBalance] = useState<number>(0);
+  const [ balanceInput, setBalanceInput ] = useState<string>('');
 
   function navigateToProfile() {
     navigation.navigate("Perfil de usuario");
@@ -31,20 +30,25 @@ const BalanceScreen = ({
 
   const handleUpdateBalance = async () => {
     if (!user?.DNI) {
-      Alert.alert("Error", "No se pudo obtener el DNI del usuario");
+      Alert.alert("❌ Error", "No se pudo obtener el DNI del usuario");
       return;
     }
   
     const parsedBalance = parseInt(balanceInput);
     if (isNaN(parsedBalance)) {
-      Alert.alert("Error", "Por favor, ingrese un saldo válido");
+      Alert.alert("❌ Error", "Por favor, ingrese un saldo válido");
+      return;
+    }
+
+    if (parsedBalance <= 0) {
+      Alert.alert("❌ Error", "El ingreso mínimo es de 1€");
       return;
     }
   
     try {
       const { httpCode, message } = await updateBalance(user.DNI, parsedBalance);
       if (httpCode === 200) {
-        Alert.alert("Éxito", "Saldo actualizado correctamente");
+        Alert.alert("✅ Éxito", "Saldo actualizado correctamente");
         setUser({
           DNI: user.DNI,
           Nombre: user.Nombre,
@@ -53,6 +57,7 @@ const BalanceScreen = ({
           Saldo: user.Saldo + parseInt(balanceInput)
         });
         setBalanceInput('');
+        navigation.navigate("Perfil de usuario")
       } else {
         Alert.alert("Error", `No se pudo actualizar el saldo: ${message}`);
         console.error(`Error ${httpCode}: ${message}`);
@@ -62,7 +67,6 @@ const BalanceScreen = ({
       console.error('Error al actualizar el saldo:', error);
     }
   };
-  
 
   return (
     <View style={styles.container}>
@@ -71,7 +75,6 @@ const BalanceScreen = ({
           <View style={styles.header}>
             <Text style={styles.title}>Añadir saldo</Text>
           </View>
-
           <View>
             <TextInput
               style={styles.input}

@@ -47,13 +47,29 @@ const RegisterScreen = () => {
   };
 
   const userRegistration = async () => {
+
+    const dniRegex = /^[0-9]{8}[TRWAGMYFPDXBNJZSQVHLCKE]$/i;
+    if (!dniRegex.test(dni)) {
+      setRegisterError(true);
+      return Alert.alert('❌ Error en el registro', 'El formato del DNI no es válido');
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(emailInput)) {
+      setRegisterError(true);
+      return Alert.alert('❌ Error en el registro', 'El formato del correo electrónico no es válido');
+    }
+
     let user = {
       DNI: dni,
       Nombre: usernameInput,
       Apellidos: surnameInput,
       email: emailInput,
       password: passwordInput,
-      Saldo: 0
+      Saldo: 0,
+      InicioAlquiler: "",
+      FinAlquiler: "",
+      MatriculaAlq: ""
     };
 
     if (user.Nombre === '' || user.DNI === '' || user.Apellidos === '' || user.email === '' || user.password === '') {

@@ -8,6 +8,8 @@ import { useRentContext } from '../contexts/RentContext';
 import { useRentedVehicleContext } from '../contexts/RentedVehicleContext';
 import { getClientByDNI } from '../services/UserService';
 import { getVehicleByPlate } from '../services/RentService';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
 
 const UserProfile = ({
   navigation,
@@ -27,7 +29,7 @@ const UserProfile = ({
   }
 
   const { email, toggleIsUserLogged } = useContext(LoginContext);
-  const { rentDetails, setRentDetails } = useRentContext();
+  const { setRentDetails } = useRentContext();
   const { selectedRentedVehicle, setSelectedRentedVehicle } = useRentedVehicleContext();
   const { user, setUser } = useUser();
   const [isLoading, setIsLoading] = useState(true);
@@ -189,8 +191,9 @@ const UserProfile = ({
             <Text style={styles.daysText}>Tu información</Text>
             <Text style={styles.text}>Nombre: {user?.Nombre}</Text>
             <Text style={styles.text}>Apellidos: {user?.Apellidos}</Text>
-            <Text style={styles.text}>DNI: {user?.DNI}</Text>
+            <Text style={styles.text}>DNI: {user?.DNI}</Text>  
           </View>
+          <FontAwesomeIcon icon={faUser} style={styles.icon}/>
         </View>
       </View>
       <View style={styles.card}>
@@ -252,6 +255,12 @@ const styles = StyleSheet.create({
   },
   vhInfo: {
     flexDirection: 'row',
+    justifyContent: "space-between"
+  },
+  icon: {
+    color: appColors.titleColor,
+    marginTop: 10,
+    marginRight: 10,
   },
   image: {
     height: 100,
