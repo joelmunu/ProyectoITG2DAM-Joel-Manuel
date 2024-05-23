@@ -1,18 +1,21 @@
 import RentService from "../../services/rent.service";
 import "../../styles/RentApp.css";
 import { useState, useEffect } from "react";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import VgTable from "../vgtable/VgTable";
 import VhTable from "../vhtable/VhTable";
 import ClTable from "../ClTable/ClTable";
-
-import { Routes, Route } from "react-router-dom";
 import Vehicle from "../vehicle/Vehicle";
+import Login from "../login/Login";
+import { adminLogin } from "../../services/auth.service";
 
-const RentApp = () => {
+const RentApp = ({isLoggedIn, setIsLoggedIn}) => {
+
   const [vehicles, setVehicles] = useState([]);
   const [vehicleData, setVehicleData] = useState([]);
   const [clientsData, setClientsData] = useState([]);
   const [selectedVehicle, setSelectedVehicle] = useState({});
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function getVistaGeneral() {
@@ -103,33 +106,47 @@ const RentApp = () => {
     });
   };
 
+  const handleLogin = async (username, password) => {
+    try {
+      await adminLogin(username, password);
+      setIsLoggedIn(true);
+      navigate("/VistaGeneral");
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div className="ContainerImagen">
-      <Routes>
-        <Route
-          path="/VistaGeneral"
-          element={<VgTable vehicles={vehicles} />}
-        ></Route>
-        <Route
-          path="/Vehiculos"
-          element={
-            <VhTable
-              vehicles={vehicleData}
-              deleteVehicleHandler={deleteVehicleHandler}
-              editVehicleHandler={editVehicleHandler}
-              setSelectedVehicle={setSelectedVehicle}
-            />
-          }
-        ></Route>
-        <Route
-          path="/Clientes"
-          element={<ClTable clients={clientsData} />}
-        ></Route>
-        <Route
-          path="/Vehicle"
-          element={<Vehicle selectedVehicle={selectedVehicle} />}
-        ></Route>
-      </Routes>
+      {isLoggedIn ? (
+        <Routes>
+          <Route
+            path="/VistaGeneral"
+            element={<VgTable vehicles={vehicles} />}
+          ></Route>
+          <Route
+            path="/Vehiculos"
+            element={
+              <VhTable
+                vehicles={vehicleData}
+                deleteVehicleHandler={deleteVehicleHandler}
+                editVehicleHandler={editVehicleHandler}
+                setSelectedVehicle={setSelectedVehicle}
+              />
+            }
+          ></Route>
+          <Route
+            path="/Clientes"
+            element={<ClTable clients={clientsData} />}
+          ></Route>
+          <Route
+            path="/Vehicle"
+            element={<Vehicle selectedVehicle={selectedVehicle} />}
+          ></Route>
+        </Routes>
+      ) : (
+        <Login handleLogin={handleLogin} />
+      )}
     </div>
   );
 };

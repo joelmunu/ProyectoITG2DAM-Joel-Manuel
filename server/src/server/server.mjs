@@ -1,13 +1,12 @@
 import express from "express";
 import { createServer } from 'http';
-
 import path from 'path';
 import cors from 'cors';
 import helmet from 'helmet';
+import rentRouter from "../routers/rent.router.mjs";
+import authRouter from "../routers/auth.router.mjs";
 
-import rentRouter from "../routers/rent.router.mjs"
-
-import  { SERVER_PORT } from '../config/config.mjs';
+import { SERVER_PORT } from '../config/config.mjs';
 
 const app = express();
 
@@ -32,7 +31,8 @@ app.get('/api/v1', (req, res) => {
     });
 });
 
-app.use('/api/v1', rentRouter)
+app.use('/api/v1', rentRouter);
+app.use('/api/v1/auth', authRouter);
 
 const server = createServer(app);
 
@@ -51,4 +51,4 @@ const stopServer = () => {
     server.close();
 };
 
-export  { runServer, stopServer };
+export { runServer, stopServer };

@@ -52,18 +52,19 @@ const editVistaGeneral = async (modelo, matricula) => {
 }
 
 const getClients = async () => {
-    const sql = "SELECT * FROM cliente"
+    const sql = "SELECT dni, nombre, apellidos, email, saldo, inicioAlquiler, finAlquiler, matriculaAlq FROM cliente"
     const [results] = await db.query(sql);
 
     return results;
 }
 
 const getClientByDNI = async (dni) => {
-    const sql = "SELECT * FROM cliente WHERE DNI=?"
+    const sql = "SELECT dni, nombre, apellidos, email, saldo, inicioAlquiler, finAlquiler, matriculaAlq FROM cliente WHERE DNI=?"
     const [results] = await db.query(sql, dni);
 
     return results;
 }
+
 
 const addClient = async (dni, nombre, apellidos, email, password) => {
     const sql = "INSERT INTO cliente VALUES(?, ?, ?, ?, ?, 0, null, null, '')";
@@ -79,7 +80,36 @@ const editClient = async (dni, nombre, apellidos, email) => {
     return results;
 }
 
-//TODO: Hacer endpoints para alquilar y cancelar alquileres
+const updateBalance = async (dni, Saldo) => {
+    const sql = "UPDATE cliente SET Saldo=Saldo+? WHERE DNI=?";
+    const [results] = await db.query(sql, [Saldo, dni]);
+
+    return results;
+}
+
+const rentVehicle = async (dni, InicioAlquiler, FinAlquiler, matricula) => {
+    try {
+        await db.query("UPDATE cliente SET InicioAlquiler=?, FinAlquiler=?, MatriculaAlq=? WHERE DNI=?", [InicioAlquiler, FinAlquiler, matricula, dni]);
+        await db.query("UPDATE vehiculo SET Alquilado=1 WHERE matriculaCar=?", [matricula]);
+        await db.query("UPDATE vistageneral SET Alquilado=1, DNIInquilino=? WHERE matricula=?", [dni, matricula]);
+        return { success: true, message: 'Vehículo alquilado correctamente.' };
+    } catch (error) {
+        console.error("Error al alquilar el vehículo:", error);
+        throw error;
+    }
+};
+
+const cancelRent = async (dni, matricula) => {
+    try {
+        await db.query("UPDATE cliente SET InicioAlquiler=null, FinAlquiler=null, MatriculaAlq=null WHERE DNI=?", [dni]);
+        await db.query("UPDATE vehiculo SET Alquilado=0 WHERE matriculaCar=?", [matricula]);
+        await db.query("UPDATE vistageneral SET Alquilado=0, DNIInquilino=null WHERE matricula=?", [matricula]);
+        return { success: true, message: 'Vehículo alquilado correctamente.' };
+    } catch (error) {
+        console.error("Error al alquilar el vehículo:", error);
+        throw error;
+    }
+};
 
 const deleteClient = async (dni) => {
     const sql = "DELETE FROM cliente WHERE dni=?";
@@ -125,6 +155,9 @@ export default {
     getClientByDNI,
     addClient,
     editClient,
+    updateBalance,
+    rentVehicle,
+    cancelRent,
     deleteClient,
     getMaintenance,
     addMaintenance,
