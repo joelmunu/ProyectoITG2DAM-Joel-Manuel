@@ -7,7 +7,18 @@ const VhTable = ({
   deleteVehicleHandler,
   editVehicleHandler,
   setSelectedVehicle,
+  setVehicles,
+  setVehicleData, // Agrega setVehicleData como prop
 }) => {
+  const handleDeleteVehicle = async (matriculaParam) => {
+    await deleteVehicleHandler(matriculaParam); // Llama al método para eliminar el vehículo
+    // Filtra los vehículos para eliminar el que corresponde a matriculaParam
+    const updatedVehicles = vehicles.filter(
+      (vehicle) => vehicle.MatriculaCar !== matriculaParam
+    );
+    setVehicles(updatedVehicles); // Actualiza el estado local de los vehículos
+  };
+
   return (
     <div className="container-vh">
       <button className="add-vehicle-button"> + Añadir Vehiculo</button>
@@ -35,11 +46,11 @@ const VhTable = ({
                 <VHRow
                   vehicle={vehicle}
                   key={vehicle.matricula}
-                  deleteVehicleHandler={deleteVehicleHandler}
+                  deleteVehicleHandler={handleDeleteVehicle}
                   editVehicleHandler={editVehicleHandler}
+                  setVehicleData={setVehicleData}
                   setSelectedVehicle={setSelectedVehicle}
                 />
-                // CREAR NUEVA PAGINA PARA LA EDICION DE LOS VEHICULOS :) UWU
               ))}
           </tbody>
         </table>

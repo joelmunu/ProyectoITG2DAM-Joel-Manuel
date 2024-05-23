@@ -5,7 +5,7 @@ import "../../styles/VgTable.css";
 const VgTable = ({ vehicles }) => {
   return (
     <div className="container">
-      <h1 className="table-title">Vista general</h1>
+      <h2 className="table-title">Vista general</h2>
       <div
         className={`table-container ${
           vehicles.length > 10 ? "scrollable" : ""
@@ -22,10 +22,9 @@ const VgTable = ({ vehicles }) => {
             </tr>
           </thead>
           <tbody>
-            {vehicles &&
-              vehicles.map((vehicle) => (
-                <VGRow vehicle={vehicle} key={vehicle.matricula} />
-              ))}
+            {vehicles.map((vehicle) => (
+              <VGRow key={vehicle.MatriculaCar} vehicle={vehicle} />
+            ))}
           </tbody>
         </table>
       </div>

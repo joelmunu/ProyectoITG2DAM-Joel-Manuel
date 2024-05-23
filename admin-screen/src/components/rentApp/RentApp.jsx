@@ -9,8 +9,7 @@ import Vehicle from "../vehicle/Vehicle";
 import Login from "../login/Login";
 import { adminLogin } from "../../services/auth.service";
 
-const RentApp = ({isLoggedIn, setIsLoggedIn}) => {
-
+const RentApp = ({ isLoggedIn, setIsLoggedIn }) => {
   const [vehicles, setVehicles] = useState([]);
   const [vehicleData, setVehicleData] = useState([]);
   const [clientsData, setClientsData] = useState([]);
@@ -54,11 +53,9 @@ const RentApp = ({isLoggedIn, setIsLoggedIn}) => {
   }, []);
 
   const deleteVehicleHandler = async (matriculaParam) => {
-    const newArray = [
-      ...vehicleData.filter(
-        (vehicle) => vehicle.matriculaCar !== matriculaParam
-      ),
-    ];
+    const newArray = vehicleData.filter(
+      (vehicle) => vehicle.MatriculaCar !== matriculaParam
+    );
     setVehicleData(newArray);
     await RentService.deleteVehicle(matriculaParam);
   };
@@ -75,6 +72,7 @@ const RentApp = ({isLoggedIn, setIsLoggedIn}) => {
     PrecioDia
   ) => {
     const newVehicle = {
+      MatriculaCar: matriculaParam,
       Fabricante,
       Modelo,
       Motorizacion,
@@ -122,8 +120,8 @@ const RentApp = ({isLoggedIn, setIsLoggedIn}) => {
         <Routes>
           <Route
             path="/VistaGeneral"
-            element={<VgTable vehicles={vehicles} />}
-          ></Route>
+            element={<VgTable vehicles={vehicleData} />}
+          />
           <Route
             path="/Vehiculos"
             element={
@@ -132,17 +130,15 @@ const RentApp = ({isLoggedIn, setIsLoggedIn}) => {
                 deleteVehicleHandler={deleteVehicleHandler}
                 editVehicleHandler={editVehicleHandler}
                 setSelectedVehicle={setSelectedVehicle}
+                setVehicles={setVehicleData}
               />
             }
-          ></Route>
-          <Route
-            path="/Clientes"
-            element={<ClTable clients={clientsData} />}
-          ></Route>
+          />
+          <Route path="/Clientes" element={<ClTable clients={clientsData} />} />
           <Route
             path="/Vehicle"
             element={<Vehicle selectedVehicle={selectedVehicle} />}
-          ></Route>
+          />
         </Routes>
       ) : (
         <Login handleLogin={handleLogin} />

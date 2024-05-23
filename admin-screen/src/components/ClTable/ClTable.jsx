@@ -20,6 +20,7 @@ const ClTable = ({ clients }) => {
               <th scope="col">Inicio Alquiler</th>
               <th scope="col">Fin Alquiler</th>
               <th scope="col">Matricula</th>
+              <th scope="col">Acción</th>
             </tr>
           </thead>
           <tbody>

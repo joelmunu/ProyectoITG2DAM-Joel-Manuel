@@ -16,7 +16,7 @@ body {
   background-color: hsla(183, 43%, 81%, 0.8); /* Fondo translúcido */
   border-radius: 10px; /* Bordes redondeados */
   padding: 20px; /* Espacio alrededor de la tabla */
-  width: 1320px;
+  width: 90%;
   margin: 0 auto;
   margin-top: 50px;
 }

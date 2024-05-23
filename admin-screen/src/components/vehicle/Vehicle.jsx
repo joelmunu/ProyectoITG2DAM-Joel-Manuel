@@ -4,19 +4,18 @@ import ibizaImage from "../../assets/ibiza.png";
 import { Link } from "react-router-dom";
 
 const Vehicle = ({ selectedVehicle }) => {
-
   const imageMap = {
-    focus: '../../assets/focus.png',
-    corolla: '../../assets/corolla.png',
-    Arona: '../../assets/aronafr.png',
+    focus: "../../assets/focus.png",
+    corolla: "../../assets/corolla.png",
+    Arona: "../../assets/aronafr.png",
     Ibiza: ibizaImage,
-    formentor: '../../assets/formentor.png',
-    gladiator: '../../assets/gladiator.png',
+    formentor: "../../assets/formentor.png",
+    gladiator: "../../assets/gladiator.png",
   };
 
   const obtenerImagen = (Modelo) => {
-    console.log(Modelo)
-    return imageMap[Modelo] || '../../assets/default.png';
+    console.log(Modelo);
+    return imageMap[Modelo] || "../../assets/default.png";
   };
 
   return (
@@ -42,7 +41,7 @@ const Vehicle = ({ selectedVehicle }) => {
           <strong>Antigüedad</strong>: {selectedVehicle.Antiguedad}
         </p>
         <p>
-          <strong>En Mantenimiento</strong>: Sí
+          <strong>En Mantenimiento</strong>: {selectedVehicle.EnMantenimiento}
         </p>
         <p>
           <strong>Descripción</strong>: {selectedVehicle.Descripcion}
@@ -51,7 +50,7 @@ const Vehicle = ({ selectedVehicle }) => {
           <strong>Tipo de vehiculo</strong>: {selectedVehicle.TipoVehiculo}
         </p>
         <p>
-          <strong>Precio/dia</strong>: 75€
+          <strong>Precio/dia</strong>: {selectedVehicle.PrecioDia} €
         </p>
         <image src={"../../assets/default.png"}></image>
         <Link className="button" to="/Vehiculos">
