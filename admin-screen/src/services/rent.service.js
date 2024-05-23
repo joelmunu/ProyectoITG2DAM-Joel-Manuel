@@ -1,5 +1,6 @@
 import axios from "axios";
-const API_URL = "http://localhost:8000/api/v1/rentacartf";
+
+const API_URL = "http://192.168.0.21:8000/api/v1/rentacartf";
 
 const getVistaGeneral = async () => {
   const response = await axios.get(`${API_URL}/vistageneral`);
@@ -29,12 +30,18 @@ const editVehicle = async (matriculaParam, data) => {
   return (await response).data.data;
 };
 
+const addVehicle = async (vehicleData) => {
+  const response = await axios.post(`${API_URL}/vehiculos/`, vehicleData);
+  return response.data;
+};
+
 const RentService = {
   getVistaGeneral,
   getVehicles,
   getClients,
   deleteVehicle,
   editVehicle,
+  addVehicle, // Añadido el método addVehicle
 };
 
 export default RentService;

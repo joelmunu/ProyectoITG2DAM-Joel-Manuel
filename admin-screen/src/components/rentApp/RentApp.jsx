@@ -1,38 +1,27 @@
-import RentService from "../../services/rent.service";
-import "../../styles/RentApp.css";
-import { useState, useEffect } from "react";
+// RentApp.js
+import React, { useState, useEffect } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
+import RentService from "../../services/rent.service";
 import VgTable from "../vgtable/VgTable";
 import VhTable from "../vhtable/VhTable";
 import ClTable from "../ClTable/ClTable";
 import Vehicle from "../vehicle/Vehicle";
 import Login from "../login/Login";
+import FormularioVehiculo from "../FormularioVehiculo/FormularioVehiculo";
 import { adminLogin } from "../../services/auth.service";
+import "../../styles/RentApp.css";
 
 const RentApp = ({ isLoggedIn, setIsLoggedIn }) => {
   const [vehicles, setVehicles] = useState([]);
-  const [vehicleData, setVehicleData] = useState([]);
   const [clientsData, setClientsData] = useState([]);
   const [selectedVehicle, setSelectedVehicle] = useState({});
   const navigate = useNavigate();
 
   useEffect(() => {
-    async function getVistaGeneral() {
-      try {
-        const data = await RentService.getVistaGeneral();
-        setVehicles(data);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    getVistaGeneral();
-  }, []);
-
-  useEffect(() => {
     async function getVehicles() {
       try {
         const data = await RentService.getVehicles();
-        setVehicleData(data);
+        setVehicles(data);
       } catch (error) {
         console.log(error);
       }
@@ -53,55 +42,36 @@ const RentApp = ({ isLoggedIn, setIsLoggedIn }) => {
   }, []);
 
   const deleteVehicleHandler = async (matriculaParam) => {
-    const newArray = vehicleData.filter(
-      (vehicle) => vehicle.MatriculaCar !== matriculaParam
-    );
-    setVehicleData(newArray);
-    await RentService.deleteVehicle(matriculaParam);
+    try {
+      await RentService.deleteVehicle(matriculaParam);
+      setVehicles((prevVehicles) =>
+        prevVehicles.filter((vehicle) => vehicle.matriculaCar !== matriculaParam)
+      );
+    } catch (error) {
+      console.error(error);
+    }
   };
 
-  const editVehicleHandler = async (
-    matriculaParam,
-    Fabricante,
-    Modelo,
-    Motorizacion,
-    Antiguedad,
-    EnMantenimiento,
-    Descripcion,
-    TipoVehiculo,
-    PrecioDia
-  ) => {
-    const newVehicle = {
-      MatriculaCar: matriculaParam,
-      Fabricante,
-      Modelo,
-      Motorizacion,
-      Antiguedad,
-      EnMantenimiento,
-      Descripcion,
-      TipoVehiculo,
-      PrecioDia,
-    };
+  const editVehicleHandler = async (matriculaParam, updatedVehicle) => {
+    try {
+      await RentService.editVehicle(matriculaParam, updatedVehicle);
+      setVehicles((prevVehicles) =>
+        prevVehicles.map((vehicle) =>
+          vehicle.matriculaCar === matriculaParam ? updatedVehicle : vehicle
+        )
+      );
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-    const index = vehicleData.findIndex(
-      (vehicle) => vehicle.MatriculaCar === matriculaParam
-    );
-    const newArray = [
-      ...vehicleData.slice(0, index),
-      newVehicle,
-      ...vehicleData.slice(index + 1),
-    ];
-    setVehicleData(newArray);
-    await RentService.editVehicle(matriculaParam, {
-      Fabricante,
-      Modelo,
-      Motorizacion,
-      Antiguedad,
-      EnMantenimiento,
-      Descripcion,
-      TipoVehiculo,
-      PrecioDia,
-    });
+  const handleAddVehicle = async (newVehicle) => {
+    try {
+      await RentService.addVehicle(newVehicle);
+      setVehicles((prevVehicles) => [...prevVehicles, newVehicle]);
+    } catch (error) {
+      console.error("Error adding vehicle:", error);
+    }
   };
 
   const handleLogin = async (username, password) => {
@@ -118,26 +88,23 @@ const RentApp = ({ isLoggedIn, setIsLoggedIn }) => {
     <div className="ContainerImagen">
       {isLoggedIn ? (
         <Routes>
-          <Route
-            path="/VistaGeneral"
-            element={<VgTable vehicles={vehicleData} />}
-          />
+          <Route path="/VistaGeneral" element={<VgTable vehicles={vehicles} />} />
           <Route
             path="/Vehiculos"
             element={
               <VhTable
-                vehicles={vehicleData}
+                vehicles={vehicles}
                 deleteVehicleHandler={deleteVehicleHandler}
                 editVehicleHandler={editVehicleHandler}
                 setSelectedVehicle={setSelectedVehicle}
-                setVehicles={setVehicleData}
               />
             }
           />
           <Route path="/Clientes" element={<ClTable clients={clientsData} />} />
+          <Route path="/Vehicle" element={<Vehicle selectedVehicle={selectedVehicle} />} />
           <Route
-            path="/Vehicle"
-            element={<Vehicle selectedVehicle={selectedVehicle} />}
+            path="/addVehicle"
+            element={<FormularioVehiculo onAddVehicle={handleAddVehicle} />}
           />
         </Routes>
       ) : (

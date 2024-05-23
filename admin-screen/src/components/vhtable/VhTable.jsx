@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom"; // Importa Link
 import VHRow from "../vhrow/VHRow";
 import "../../styles/VhTable.css";
 
@@ -7,8 +8,7 @@ const VhTable = ({
   deleteVehicleHandler,
   editVehicleHandler,
   setSelectedVehicle,
-  setVehicles,
-  setVehicleData, // Agrega setVehicleData como prop
+  setVehicles
 }) => {
   const handleDeleteVehicle = async (matriculaParam) => {
     await deleteVehicleHandler(matriculaParam); // Llama al método para eliminar el vehículo
@@ -21,7 +21,10 @@ const VhTable = ({
 
   return (
     <div className="container-vh">
-      <button className="add-vehicle-button"> + Añadir Vehiculo</button>
+      <Link className="add-vehicle-button" to="/addVehicle">
+        {" "}
+        + Añadir Vehiculo
+      </Link>
       <div
         className={`table-container ${
           vehicles.length > 13 ? "scrollable" : ""
@@ -48,7 +51,6 @@ const VhTable = ({
                   key={vehicle.matricula}
                   deleteVehicleHandler={handleDeleteVehicle}
                   editVehicleHandler={editVehicleHandler}
-                  setVehicleData={setVehicleData}
                   setSelectedVehicle={setSelectedVehicle}
                 />
               ))}
