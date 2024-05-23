@@ -45,7 +45,20 @@ const RentApp = ({ isLoggedIn, setIsLoggedIn }) => {
     try {
       await RentService.deleteVehicle(matriculaParam);
       setVehicles((prevVehicles) =>
-        prevVehicles.filter((vehicle) => vehicle.matriculaCar !== matriculaParam)
+        prevVehicles.filter(
+          (vehicle) => vehicle.matriculaCar !== matriculaParam
+        )
+      );
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const deleteClientHandler = async (dni) => {
+    try {
+      await RentService.deleteClient(dni);
+      setClientsData((prevClients) =>
+        prevClients.filter((client) => client.dni !== dni)
       );
     } catch (error) {
       console.error(error);
@@ -88,7 +101,10 @@ const RentApp = ({ isLoggedIn, setIsLoggedIn }) => {
     <div className="ContainerImagen">
       {isLoggedIn ? (
         <Routes>
-          <Route path="/VistaGeneral" element={<VgTable vehicles={vehicles} />} />
+          <Route
+            path="/VistaGeneral"
+            element={<VgTable vehicles={vehicles} />}
+          />
           <Route
             path="/Vehiculos"
             element={
@@ -100,8 +116,20 @@ const RentApp = ({ isLoggedIn, setIsLoggedIn }) => {
               />
             }
           />
-          <Route path="/Clientes" element={<ClTable clients={clientsData} />} />
-          <Route path="/Vehicle" element={<Vehicle selectedVehicle={selectedVehicle} />} />
+          <Route
+            path="/Clientes"
+            element={
+              <ClTable
+                clients={clientsData}
+                deleteClientHandler={deleteClientHandler}
+                setClientsData={setClientsData}
+              />
+            }
+          />
+          <Route
+            path="/Vehicle"
+            element={<Vehicle selectedVehicle={selectedVehicle} />}
+          />
           <Route
             path="/addVehicle"
             element={<FormularioVehiculo onAddVehicle={handleAddVehicle} />}
