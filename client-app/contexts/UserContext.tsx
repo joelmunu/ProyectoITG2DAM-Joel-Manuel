@@ -16,6 +16,7 @@ interface UserContextProps {
     setUser: (user: User | undefined) => void;
 }
 
+
 const UserContext = createContext<UserContextProps | undefined>(undefined);
 
 export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
@@ -31,7 +32,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 export const useUser = (): UserContextProps => {
     const context = useContext(UserContext);
     if (!context) {
-        throw new Error('useUser must be used within a UserProvider');
+        throw new Error('useUser debe usarse dentro de un proveedor UserProvider');
     }
     return context;
 };

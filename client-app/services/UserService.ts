@@ -1,6 +1,7 @@
 const AUTH_API_URL = 'http://192.168.0.21:8000/api/v1/auth';
 const LOGIN_PATH = '/login';
 const REGISTER_PATH = '/register';
+const CLIENTS_PATH = '/cliente'
 
 interface User {
     DNI: string;
@@ -9,6 +10,9 @@ interface User {
     email: string;
     password: string;
     Saldo: number;
+    InicioAlquiler: string;
+    FinAlquiler: string;
+    MatriculaAlq: string
 }
 
 interface ApiResponse<T> {
@@ -58,6 +62,37 @@ export const userLogin = async (user: {}): Promise<{ httpCode: number; userData?
     if (httpCode === 200) {
         const data: ApiResponse<User> = await response.json();
         return { httpCode, userData: data.user };
+    }
+
+    return { httpCode };
+};
+
+interface ClientData {
+    dni: string;
+    nombre: string;
+    apellidos: string;
+    email: string;
+    saldo: number;
+    inicioAlquiler: string | null;
+    finAlquiler: string | null;
+    matriculaAlq: string | null;
+}
+
+export const getClientByDNI = async (dni: string | undefined): Promise<{ httpCode: number; clientData?: ClientData }> => {
+    const request: RequestInfo = `http://192.168.0.21:8000/api/v1/rentacartf/cliente/${dni}`;
+    const response = await fetch(request);
+    
+    const httpCode = response.status;
+
+    if (httpCode === 200) {
+        const responseData = await response.json();
+        const clientDataArray = responseData.data;
+        if (clientDataArray && clientDataArray.length > 0) {
+            const clientData = clientDataArray[0];
+            return { httpCode, clientData };
+        } else {
+            return { httpCode };
+        }
     }
 
     return { httpCode };

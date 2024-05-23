@@ -1,5 +1,6 @@
 const API_URL = 'http://192.168.0.21:8000/api/v1/rentacartf';
 const VEHICLES_PATH = '/vehiculos';
+const VEHICLE_BY_PLATE_PATH = '/vehiculo';
 
 type VehicleJsonResponse = {
     statusCode: number;
@@ -32,7 +33,7 @@ const getInitRequest = (httpVerb: string): RequestInit => {
       },
     }
     return init;
-  }
+}
 
 export const getVehicleData = async (): Promise<VehicleData> => {
   let vehicleData: VehicleData = [];
@@ -46,4 +47,20 @@ export const getVehicleData = async (): Promise<VehicleData> => {
   }
 
   return vehicleData;
+}
+
+export const getVehicleByPlate = async (matricula: string): Promise<VehicleData> => {
+    if (!matricula) {
+        throw new Error('La matrícula es requerida');
+    }
+
+    const request: RequestInfo = `${API_URL}${VEHICLE_BY_PLATE_PATH}/${matricula}`;
+    const response = await fetch(request, getInitRequest('GET'));
+    const json: VehicleJsonResponse = await response.json();
+
+    if (json.statusCode !== 200) {
+        throw new Error(`Error al obtener el vehículo por matrícula: ${json.message}`);
+    }
+
+    return json.data;
 }

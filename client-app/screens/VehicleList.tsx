@@ -1,29 +1,26 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity, Pressable } from 'react-native';
+import React, { useEffect } from 'react';
+import { View, Text, StyleSheet, FlatList, Image, Pressable } from 'react-native';
 import appColors from '../assets/styles/appColors';
-import { getVehicleData, Vehicle } from '../services/RentService'; // Assuming your API functions are in api.ts
 import { NavigationProp, ParamListBase } from "@react-navigation/native";
-
-interface Props { }
+import { useVehicleContext } from '../contexts/VehicleContext';
 
 const VehicleList = ({
   navigation,
 }: {
   navigation: NavigationProp<ParamListBase>;
 }) => {
-  const [vehicleData, setVehicleData] = useState<Vehicle[]>([]);
+  const { vehicleData, getVehicleData, setSelectedVehicle } = useVehicleContext();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await getVehicleData();
-        setVehicleData(data);
+        await getVehicleData();
       } catch (error) {
         console.error('Error fetching vehicle data:', error);
       }
     };
     fetchData();
-  }, []);
+  }, [getVehicleData]);
 
   const imageMap: any = {
     focus: require('../assets/focus.png'),
@@ -39,9 +36,10 @@ const VehicleList = ({
     return imageMap[normalizedModelo] || require('../assets/default.png');
   };
 
-  function navigateToVehicle() {
+  const handleVehiclePress = (vehicle: any) => {
+    setSelectedVehicle(vehicle);
     navigation.navigate('Vehiculo');
-  }
+  };
 
   return (
     <View style={styles.container}>
@@ -49,8 +47,8 @@ const VehicleList = ({
         style={styles.cardContainer}
         data={vehicleData}
         renderItem={({ item }) => (
-          item.Alquilado ? (
-            <View style={[styles.card, styles.rented]}>
+          <View style={[styles.card, item.Alquilado ? styles.rented : null]}>
+            {item.Alquilado ? (
               <View style={styles.vhInfo}>
                 <Image style={styles.image} source={require("../assets/default.png")} />
                 <View style={styles.verticalLine}></View>
@@ -61,10 +59,8 @@ const VehicleList = ({
                   <Text style={styles.priceText}>{`Precio por día: ${item.PrecioDia}€`}</Text>
                 </View>
               </View>
-            </View>
-          ) : (
-            <Pressable onPress={() => navigateToVehicle()}>
-              <View style={styles.card}>
+            ) : (
+              <Pressable onPress={() => handleVehiclePress(item)}>
                 <View style={styles.vhInfo}>
                   <Image style={styles.image} source={obtenerImagen(item.Modelo)} />
                   <View style={styles.verticalLine}></View>
@@ -75,9 +71,9 @@ const VehicleList = ({
                     <Text style={styles.priceText}>{`Precio por día: ${item.PrecioDia}€`}</Text>
                   </View>
                 </View>
-              </View>
-            </Pressable>
-          )
+              </Pressable>
+            )}
+          </View>
         )}
         keyExtractor={(item, index) => index.toString()}
       />

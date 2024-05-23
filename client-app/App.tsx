@@ -7,6 +7,9 @@ import Header from './components/Header';
 import appColors from './assets/styles/appColors';
 import LoginProvider from './providers/LoginProvider';
 import { UserProvider } from './contexts/UserContext';
+import VehicleProvider from './providers/VehicleProvider';
+import { RentProvider } from './contexts/RentContext';
+import RentedVehicleProvider from './providers/RentedVehicleProvider';
 
 export default function App() {
 
@@ -14,11 +17,17 @@ export default function App() {
     <NavigationContainer>
       <LoginProvider>
         <UserProvider>
-          <View style={styles.container}>
-            <Header />
-            <StatusBar style="auto" />
-            <CustomDrawer />
-          </View>
+          <VehicleProvider>
+            <RentProvider>
+              <RentedVehicleProvider>
+                <View style={styles.container}>
+                  <Header />
+                  <StatusBar style="auto" />
+                  <CustomDrawer />
+                </View>
+                </RentedVehicleProvider>
+            </RentProvider>
+          </VehicleProvider>
         </UserProvider>
       </LoginProvider>
     </NavigationContainer>
