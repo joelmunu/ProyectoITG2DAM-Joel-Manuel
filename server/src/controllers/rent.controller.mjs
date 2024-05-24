@@ -1,6 +1,7 @@
 import rentService from "../services/rent.service.mjs";
 import httpCodes from "../errors/httpCodes.mjs";
 
+// Function to get general view data
 const getVistaGeneral = async (req, res) => {
     if (!req.query.name) {
         try {
@@ -10,8 +11,8 @@ const getVistaGeneral = async (req, res) => {
                 statusMessage: 'OK',
                 message:
                     !data || data.length === 0
-                        ? 'La tabla vista general está vacía'
-                        : 'Registros de la tabla vista general devueltos correctamente',
+                        ? 'The general view table is empty'
+                        : 'Records from the general view table returned successfully',
                 data
             });
         } catch (error) {
@@ -26,6 +27,7 @@ const getVistaGeneral = async (req, res) => {
     }
 }
 
+// Function to get all vehicles
 const getVehicles = async (req, res) => {
     if (!req.query.name) {
         try {
@@ -35,8 +37,8 @@ const getVehicles = async (req, res) => {
                 statusMessage: 'OK',
                 message:
                     !data || data.length === 0
-                        ? 'La tabla de vehículos está vacía'
-                        : 'Registros de la tabla vehículos devueltos correctamente',
+                        ? 'The vehicles table is empty'
+                        : 'Records from the vehicles table returned successfully',
                 data
             });
         } catch (error) {
@@ -51,6 +53,7 @@ const getVehicles = async (req, res) => {
     }
 }
 
+// Function to get a vehicle by its plate number
 const getVehicleByPlate = async (req, res) => {
     const { matriculaParam } = req.params;
 
@@ -59,7 +62,7 @@ const getVehicleByPlate = async (req, res) => {
             .send({
                 statusCode: httpCodes.BAD_REQUEST,
                 statusMessage: 'Bad Request',
-                message: 'Error: El parámetro matrícula se requiere',
+                message: 'Error: The plate parameter is required',
                 data: null
             });
     };
@@ -71,7 +74,7 @@ const getVehicleByPlate = async (req, res) => {
             statusMessage: 'OK',
             message:
                 !data || data.length === 0
-                    ? 'Error: No se encuentra el vehiculo' //TODO: Cambiar codigo HTTP
+                    ? 'Error: The vehicle is not found'
                     : 'OK',
             data
         });
@@ -86,6 +89,7 @@ const getVehicleByPlate = async (req, res) => {
     };
 }
 
+// Function to add a new vehicle
 const addVehicle = async (req, res) => {
     const { matriculaCar, fabricante, modelo, motorizacion, antiguedad, descripcion, tipoVehiculo, precioDia } = req.body;
 
@@ -95,7 +99,7 @@ const addVehicle = async (req, res) => {
         return res.status(httpCodes.BAD_REQUEST).send({
             statusCode: httpCodes.BAD_REQUEST,
             statusMessage: 'Bad Request',
-            message: 'Error: se requieren todos los parámetros',
+            message: 'Error: All parameters are required',
             data: null
         });
     }
@@ -105,8 +109,8 @@ const addVehicle = async (req, res) => {
         res.send({
             statusCode: httpCodes.OK,
             statusMessage: 'OK',
-            message: 'Vehículo añadido correctamente',
-            data: newVehicle // Devuelve los datos del vehículo añadido
+            message: 'Vehicle added successfully',
+            data: newVehicle // Returns the added vehicle data
         });
     } catch (error) {
         console.log(error);
@@ -119,6 +123,7 @@ const addVehicle = async (req, res) => {
     }
 };
 
+// Function to edit a vehicle
 const editVehicle = async (req, res) => {
     const { matriculaParam } = req.params;
     const { fabricante, modelo, motorizacion, antiguedad, descripcion, tipoVehiculo, precioDia } = req.body;
@@ -128,7 +133,7 @@ const editVehicle = async (req, res) => {
             .send({
                 statusCode: httpCodes.OK,
                 statusMessage: 'Bad Request',
-                message: 'Error: se requieren todos los parámetros',
+                message: 'Error: All parameters are required',
                 data: null
             });
     };
@@ -140,8 +145,8 @@ const editVehicle = async (req, res) => {
             statusMessage: 'OK',
             message:
                 !data || data.length === 0
-                    ? 'Error: No se encuentra el vehículo que se desea editar'
-                    : 'Vehículo modificado correctamente',
+                    ? 'Error: The vehicle to be edited is not found'
+                    : 'Vehicle modified successfully',
             data
         });
     } catch (error) {
@@ -155,6 +160,7 @@ const editVehicle = async (req, res) => {
     };
 }
 
+// Function to delete a vehicle
 const deleteVehicle = async (req, res) => {
     const { matriculaParam } = req.params;
 
@@ -163,7 +169,7 @@ const deleteVehicle = async (req, res) => {
             .send({
                 statusCode: httpCodes.OK,
                 statusMessage: 'Bad Request',
-                message: 'Error: El parámetro mátricula es requerido',
+                message: 'Error: The plate parameter is required',
                 data: null
             });
     };
@@ -175,8 +181,8 @@ const deleteVehicle = async (req, res) => {
             statusMessage: 'OK',
             message:
                 !data || data.length === 0
-                    ? 'Error: No se encuentra el vehículo que se desea editar'
-                    : 'Vehículo eliminado correctamente',
+                    ? 'Error: The vehicle to be deleted is not found'
+                    : 'Vehicle deleted successfully',
             data
         });
     } catch (error) {
@@ -190,6 +196,7 @@ const deleteVehicle = async (req, res) => {
     }
 }
 
+// Function to rent a vehicle
 const rentVehicle = async (req, res) => {
     const { matricula, dni, InicioAlquiler, FinAlquiler } = req.body;
 
@@ -197,7 +204,7 @@ const rentVehicle = async (req, res) => {
         return res.status(httpCodes.OK).send({
             statusCode: httpCodes.OK,
             statusMessage: 'Bad Request',
-            message: 'Error: se requieren todos los parámetros',
+            message: 'Error: All parameters are required',
             data: null
         });
     }
@@ -208,8 +215,8 @@ const rentVehicle = async (req, res) => {
             statusCode: httpCodes.OK,
             statusMessage: 'OK',
             message: !data || data.length === 0
-                ? 'Error: No se encuentra el vehículo que se desea alquilar'
-                : 'Vehículo modificado correctamente',
+                ? 'Error: The vehicle to be rented is not found'
+                : 'Vehicle modified successfully',
             data
         });
     } catch (error) {
@@ -222,6 +229,7 @@ const rentVehicle = async (req, res) => {
     }
 };
 
+// Function to cancel a vehicle rent
 const cancelRent = async (req, res) => {
     const { matricula, dni } = req.body;
 
@@ -229,7 +237,7 @@ const cancelRent = async (req, res) => {
         return res.status(httpCodes.OK).send({
             statusCode: httpCodes.OK,
             statusMessage: 'Bad Request',
-            message: 'Error: se requieren todos los parámetros',
+            message: 'Error: All parameters are required',
             data: null
         });
     }
@@ -240,8 +248,8 @@ const cancelRent = async (req, res) => {
             statusCode: httpCodes.OK,
             statusMessage: 'OK',
             message: !data || data.length === 0
-                ? 'Error: No se encuentra el vehículo que se desea alquilar'
-                : 'Vehículo modificado correctamente',
+                ? 'Error: The vehicle to be rented is not found'
+                : 'Vehicle modified successfully',
             data
         });
     } catch (error) {
@@ -254,6 +262,7 @@ const cancelRent = async (req, res) => {
     }
 }
 
+// Function to get all clients
 const getClients = async (req, res) => {
     if (!req.query.name) {
         try {
@@ -263,8 +272,8 @@ const getClients = async (req, res) => {
                 statusMessage: 'OK',
                 message:
                     !data || data.length === 0
-                        ? 'Error: La tabla clientes esta vacía'
-                        : 'Registros de la tabla cliente devueltos correctamente',
+                        ? 'Error: The clients table is empty'
+                        : 'Records from the client table returned successfully',
                 data
             });
         } catch (error) {
@@ -279,6 +288,7 @@ const getClients = async (req, res) => {
     }
 }
 
+// Function to get a client by their DNI
 const getClientByDNI = async (req, res) => {
     const { dniParam } = req.params;
 
@@ -287,7 +297,7 @@ const getClientByDNI = async (req, res) => {
             .send({
                 statusCode: httpCodes.BAD_REQUEST,
                 statusMessage: 'Bad Request',
-                message: 'Error: El parámetro dni se requiere',
+                message: 'Error: The dni parameter is required',
                 data: null
             });
     };
@@ -299,7 +309,7 @@ const getClientByDNI = async (req, res) => {
             statusMessage: 'OK',
             message:
                 !data || data.length === 0
-                    ? 'Error: No se encuentra el cliente'
+                    ? 'Error: The client is not found'
                     : 'OK',
             data
         });
@@ -314,6 +324,7 @@ const getClientByDNI = async (req, res) => {
     }
 }
 
+// Function to add a new client
 const addClient = async (req, res) => {
     const { dni, nombre, apellidos, email, password } = req.body;
 
@@ -321,7 +332,7 @@ const addClient = async (req, res) => {
         return res.status(httpCodes.BAD_REQUEST).send({
             statusCode: httpCodes.BAD_REQUEST,
             statusMessage: 'Bad Request',
-            message: 'Error: Se requieren los parámetros dni, nombre, apellidos, email y contraseña',
+            message: 'Error: The parameters dni, name, last name, email, and password are required',
             data: null
         });
     };
@@ -333,8 +344,8 @@ const addClient = async (req, res) => {
             statusMessage: 'OK',
             message:
                 !data || data.length === 0
-                    ? 'Error: La tabla clientes está vacia'
-                    : 'Cliente añadido correctamente',
+                    ? 'Error: The clients table is empty'
+                    : 'Client added successfully',
             data
         });
     } catch (error) {
@@ -349,6 +360,7 @@ const addClient = async (req, res) => {
     }
 }
 
+// Function to edit a client
 const editClient = async (req, res) => {
     const { dniParam } = req.params;
     const { nombre, apellidos, email } = req.body;
@@ -358,7 +370,7 @@ const editClient = async (req, res) => {
             .send({
                 statusCode: httpCodes.OK,
                 statusMessage: 'Bad Request',
-                message: 'Error: se requieren todos los parámetros',
+                message: 'Error: All parameters are required',
                 data: null
             });
     };
@@ -370,8 +382,8 @@ const editClient = async (req, res) => {
             statusMessage: 'OK',
             message:
                 !data || data.length === 0
-                    ? 'Error: No se encuentra el cliente que se desea editar'
-                    : 'Vehículo modificado correctamente',
+                    ? 'Error: The client to be edited is not found'
+                    : 'Vehicle modified successfully',
             data
         });
     } catch (error) {
@@ -385,6 +397,7 @@ const editClient = async (req, res) => {
     }
 }
 
+// Function to update a client's balance
 const updateBalance = async(req, res) => {
     const { dni, Saldo } = req.body;
 
@@ -393,7 +406,7 @@ const updateBalance = async(req, res) => {
             .send({
                 statusCode: httpCodes.OK,
                 statusMessage: 'Bad Request',
-                message: 'Error: se requieren todos los parámetros',
+                message: 'Error: All parameters are required',
                 data: null
             });
     };
@@ -405,8 +418,8 @@ const updateBalance = async(req, res) => {
             statusMessage: 'OK',
             message:
                 !data || data.length === 0
-                    ? 'Error: No se encuentra el cliente que se desea editar'
-                    : 'Vehículo modificado correctamente',
+                    ? 'Error: The client to be edited is not found'
+                    : 'Vehicle modified successfully',
             data
         });
     } catch (error) {
@@ -420,6 +433,7 @@ const updateBalance = async(req, res) => {
     }
 }
 
+// Function to delete a client
 const deleteClient = async (req, res) => {
     const { dniParam } = req.params;
     if (!dniParam) {
@@ -427,7 +441,7 @@ const deleteClient = async (req, res) => {
             .send({
                 statusCode: httpCodes.OK,
                 statusMessage: 'Bad Request',
-                message: 'Error: El parámetro dni es requerido',
+                message: 'Error: The dni parameter is required',
                 data: null
             });
     };
@@ -439,8 +453,8 @@ const deleteClient = async (req, res) => {
             statusMessage: 'OK',
             message:
                 !data || data.length === 0
-                    ? 'Error: No se encuentra el cliente que se desea eliminar'
-                    : 'Cliente eliminado correctamente de la tabla cliente',
+                    ? 'Error: The client to be deleted is not found'
+                    : 'Client deleted successfully from the client table',
             data
         });
     } catch (error) {
@@ -454,6 +468,7 @@ const deleteClient = async (req, res) => {
     }
 }
 
+// Function to get maintenance records for a vehicle
 const getMaintenance = async (req, res) => {
     const { matricula } = req.params;
 
@@ -462,7 +477,7 @@ const getMaintenance = async (req, res) => {
             .send({
                 statusCode: httpCodes.OK,
                 statusMessage: 'Bad Request',
-                message: 'Error: El parámetro matrícula es requerido',
+                message: 'Error: The plate parameter is required',
                 data: null
             });
     };
@@ -475,8 +490,8 @@ const getMaintenance = async (req, res) => {
                 statusMessage: 'OK',
                 message:
                     !data || data.length === 0
-                        ? 'Error: La tabla mantenimiento está vacía'
-                        : 'Registro de la tabla mantenimiento devuelto correctamente',
+                        ? 'Error: The maintenance table is empty'
+                        : 'Record from the maintenance table returned successfully',
                 data
             });
         } catch (error) {
@@ -491,6 +506,7 @@ const getMaintenance = async (req, res) => {
     }
 }
 
+// Function to add maintenance record for a vehicle
 const addMaintenance = async (req, res) => {
     const { matricula, modelo, tipo, estado } = req.body;
 
@@ -498,7 +514,7 @@ const addMaintenance = async (req, res) => {
         return res.status(httpCodes.BAD_REQUEST).send({
             statusCode: httpCodes.BAD_REQUEST,
             statusMessage: 'Bad Request',
-            message: 'Error: Se requieren los parámetros matrícula, modelo, tipo y estado',
+            message: 'Error: The parameters matricula, modelo, tipo, and estado are required',
             data: null
         });
     };
@@ -510,8 +526,8 @@ const addMaintenance = async (req, res) => {
             statusMessage: 'OK',
             message:
                 !data || data.length === 0
-                    ? 'Error: La tabla mantenimiento está vacía'
-                    : 'Vehículo añadido a la tabla mantenimiento',
+                    ? 'Error: The maintenance table is empty'
+                    : 'Vehicle added to the maintenance table',
             data
         });
     } catch (error) {
@@ -526,6 +542,7 @@ const addMaintenance = async (req, res) => {
     };
 }
 
+// Function to delete maintenance record for a vehicle
 const deleteMaintenance = async (req, res) => {
     const { matricula } = req.params;
 
@@ -534,7 +551,7 @@ const deleteMaintenance = async (req, res) => {
             .send({
                 statusCode: httpCodes.OK,
                 statusMessage: 'Bad Request',
-                message: 'Error: El parámetro matrícula es requerido',
+                message: 'Error: The plate parameter is required',
                 data: null
             });
     };
@@ -546,8 +563,8 @@ const deleteMaintenance = async (req, res) => {
             statusMessage: 'OK',
             message:
                 !data || data.length === 0
-                    ? 'Error: No se encuentra el vehículo que se desea eliminar de la tabla mantenimiento'
-                    : 'Vehículo eliminado correctamente de la tabla mantenimiento',
+                    ? 'Error: The vehicle to be deleted from the maintenance table is not found'
+                    : 'Vehicle deleted successfully from the maintenance table',
             data
         });
     } catch (error) {
