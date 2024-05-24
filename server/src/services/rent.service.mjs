@@ -46,9 +46,9 @@ const editVehicle = async (fabricante, modelo, motorizacion, antiguedad, descrip
 const deleteVehicle = async (matricula) => {
     const sql = "DELETE FROM vehiculo WHERE matriculaCar=?";
     const [results] = await db.query(sql, [matricula]);
-    await db.query("DELETE FROM vistageneral WHERE matricula=?", [matricula]);
+    db.query("DELETE FROM vistageneral WHERE matricula=?", [matricula]);
     return results;
-};
+}
 
 const updateVistaGeneral = async (matricula, modelo) => {
     const sql = "INSERT INTO vistageneral (matricula, modelo, alquilado, enmantenimiento, dniinquilino) VALUES(?, ?, 0, 0, '');";

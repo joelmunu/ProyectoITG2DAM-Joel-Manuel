@@ -159,33 +159,61 @@ const deleteVehicle = async (req, res) => {
     const { matriculaParam } = req.params;
 
     if (!matriculaParam) {
-        return res.status(httpCodes.BAD_REQUEST).send({
-            statusCode: httpCodes.BAD_REQUEST,
+        res.status(httpCodes.OK)
+            .send({
+                statusCode: httpCodes.OK,
+                statusMessage: 'Bad Request',
+                message: 'Error: El parámetro mátricula es requerido',
+                data: null
+            });
+    };
+
+    try {
+        const data = await rentService.deleteVehicle(matriculaParam);
+        res.send({
+            statusCode: !data || data.length === 0 ? httpCodes.NOT_FOUND : httpCodes.OK,
+            statusMessage: 'OK',
+            message:
+                !data || data.length === 0
+                    ? 'Error: No se encuentra el vehículo que se desea editar'
+                    : 'Vehículo eliminado correctamente',
+            data
+        });
+    } catch (error) {
+        res.status(httpCodes.INTERNAL_SERVER_ERROR)
+            .send({
+                statusCode: httpCodes.INTERNAL_SERVER_ERROR,
+                statusMessage: 'Internal Server Error',
+                message: null,
+                data: null
+            });
+    }
+}
+
+const rentVehicle = async (req, res) => {
+    const { matricula, dni, InicioAlquiler, FinAlquiler } = req.body;
+
+    if (!dni || !InicioAlquiler || !FinAlquiler) {
+        return res.status(httpCodes.OK).send({
+            statusCode: httpCodes.OK,
             statusMessage: 'Bad Request',
-            message: 'Error: El parámetro mátricula es requerido',
+            message: 'Error: se requieren todos los parámetros',
             data: null
         });
     }
 
     try {
-        const data = await rentService.deleteVehicle(matriculaParam);
-        if (data.affectedRows === 0) {
-            return res.status(httpCodes.NOT_FOUND).send({
-                statusCode: httpCodes.NOT_FOUND,
-                statusMessage: 'Not Found',
-                message: 'Error: No se encuentra el vehículo que se desea eliminar',
-                data: null
-            });
-        }
-        res.send({
+        const data = await rentService.rentVehicle(dni, InicioAlquiler, FinAlquiler, matricula);
+        return res.send({
             statusCode: httpCodes.OK,
             statusMessage: 'OK',
-            message: 'Vehículo eliminado correctamente',
+            message: !data || data.length === 0
+                ? 'Error: No se encuentra el vehículo que se desea alquilar'
+                : 'Vehículo modificado correctamente',
             data
         });
     } catch (error) {
-        console.log(error);
-        res.status(httpCodes.INTERNAL_SERVER_ERROR).send({
+        return res.status(httpCodes.INTERNAL_SERVER_ERROR).send({
             statusCode: httpCodes.INTERNAL_SERVER_ERROR,
             statusMessage: 'Internal Server Error',
             message: null,
