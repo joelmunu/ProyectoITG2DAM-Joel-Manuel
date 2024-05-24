@@ -7,8 +7,7 @@ const VhTable = ({
   vehicles,
   deleteVehicleHandler,
   editVehicleHandler,
-  setSelectedVehicle,
-  setVehicles
+  setSelectedVehicle
 }) => {
   return (
     <div className="container-vh">
@@ -17,9 +16,9 @@ const VhTable = ({
         + Añadir Vehiculo
       </Link>
       <div
-        className={`table-container ${
-          vehicles.length > 13 ? "scrollable" : ""
-        }`}
+        className="table-container" {
+          ...vehicles.length > 13 ? "scrollable" : ""
+        }
       >
         <table className="table table-success table-striped">
           <thead>

@@ -1,4 +1,3 @@
-// FormularioVehiculo.js
 import React, { useState } from "react";
 import "../../styles/FormularioVehiculo.css";
 
@@ -25,6 +24,7 @@ const FormularioVehiculo = ({ onAddVehicle }) => {
       const newVehicle = { ...datos, enMantenimiento: false };
       await onAddVehicle(newVehicle);
       console.log("Vehículo añadido correctamente");
+      alert(`Se ha añadido el vehículo ${datos.matriculaCar}`)
     } catch (error) {
       console.error("Error adding vehicle:", error);
     }

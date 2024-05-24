@@ -25,9 +25,10 @@ const deleteVehicle = async (matriculaParam) => {
   return (await response).data.data;
 };
 
-const editVehicle = async (matriculaParam, data) => {
-  const response = axios.put(`${API_URL}/vehiculo/${matriculaParam}`, data);
-  return (await response).data.data;
+const editVehicle = async (matricula, vehicle) => {
+  console.log(vehicle)
+  const response = await axios.put(`${API_URL}/vehiculo/${matricula}`, vehicle);
+  return response.data;
 };
 
 const addVehicle = async (vehicleData) => {

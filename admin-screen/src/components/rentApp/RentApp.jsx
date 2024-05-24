@@ -7,6 +7,7 @@ import ClTable from "../ClTable/ClTable";
 import Vehicle from "../vehicle/Vehicle";
 import Login from "../login/Login";
 import FormularioVehiculo from "../FormularioVehiculo/FormularioVehiculo";
+import EditarVehiculo from "../EditarVehiculo/EditarVehiculo"; // Importar el componente de ediciÃ³n
 import { adminLogin } from "../../services/auth.service";
 import "../../styles/RentApp.css";
 
@@ -66,14 +67,23 @@ const RentApp = ({ isLoggedIn, setIsLoggedIn }) => {
 
   const editVehicleHandler = async (matriculaParam, updatedVehicle) => {
     try {
-      await RentService.editVehicle(matriculaParam, updatedVehicle);
+      const vehicleData = {
+        fabricante: updatedVehicle.fabricante,
+        modelo: updatedVehicle.modelo,
+        motorizacion: updatedVehicle.motorizacion,
+        antiguedad: updatedVehicle.antiguedad !== undefined ? updatedVehicle.antiguedad.toString() : '',
+        descripcion: updatedVehicle.descripcion,
+        tipoVehiculo: updatedVehicle.tipoVehiculo,
+        precioDia: updatedVehicle.precioDia !== undefined ? updatedVehicle.precioDia.toString() : ''
+      };
+      await RentService.editVehicle(matriculaParam, vehicleData);
       setVehicles((prevVehicles) =>
         prevVehicles.map((vehicle) =>
-          vehicle.MatriculaCar === matriculaParam ? updatedVehicle : vehicle
+          vehicle.MatriculaCar === matriculaParam ? { ...vehicle, ...vehicleData } : vehicle
         )
       );
     } catch (error) {
-      console.error(error);
+      console.error("Error editing vehicle:", error);
     }
   };
 
@@ -133,6 +143,10 @@ const RentApp = ({ isLoggedIn, setIsLoggedIn }) => {
           <Route
             path="/addVehicle"
             element={<FormularioVehiculo onAddVehicle={handleAddVehicle} />}
+          />
+          <Route
+            path="/editVehicle"
+            element={<EditarVehiculo selectedVehicle={selectedVehicle} editVehicleHandler={editVehicleHandler} />}
           />
         </Routes>
       ) : (

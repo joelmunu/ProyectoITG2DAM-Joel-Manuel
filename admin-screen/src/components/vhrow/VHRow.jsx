@@ -1,14 +1,10 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faPenToSquare,
-  faTrash,
-  faEye,
-} from "@fortawesome/free-solid-svg-icons";
+import { faPenToSquare, faTrash, faEye } from "@fortawesome/free-solid-svg-icons";
 import "../../styles/VhTable.css";
 import { Link } from "react-router-dom";
 
-const VHRow = ({ vehicle, deleteVehicleHandler, setSelectedVehicle }) => {
+const VHRow = ({ vehicle, deleteVehicleHandler, setSelectedVehicle, editVehicleHandler }) => {
   const deleteVehicle = (matriculaParam) => {
     const deleteConfirmation = window.confirm(
       `¿Está seguro de eliminar el registro con matrícula ${matriculaParam}?`
@@ -38,11 +34,13 @@ const VHRow = ({ vehicle, deleteVehicleHandler, setSelectedVehicle }) => {
       <th scope="row">{vehicle.MatriculaCar}</th>
       <td>{vehicle.Modelo}</td>
       <td>{vehicle.Motorizacion}</td>
-      <td>{vehicle.Alquilado}</td>
+      <td>{vehicle.Alquilado ? "Sí" : "No"}</td>
       <td>{vehicle.PrecioDia}</td>
-      <td>{vehicle.EnMantenimiento}</td>
+      <td>{vehicle.EnMantenimiento ? "Sí" : "No"}</td>
       <td>
-        <FontAwesomeIcon icon={faPenToSquare} className="btn-edit" />
+        <Link onClick={selectVehicle} to="/editVehicle">
+          <FontAwesomeIcon icon={faPenToSquare} className="btn-edit" />
+        </Link>
         <FontAwesomeIcon
           icon={faTrash}
           className="btn-delete"

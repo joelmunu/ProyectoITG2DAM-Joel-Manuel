@@ -1,52 +1,45 @@
-// EditarVehiculo.js
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../../styles/EditarVehiculo.css";
 
-const EditarVehiculo = ({ onAddVehicle }) => {
-  const [datos, setDatos] = useState({
-    matriculaCar: "",
-    fabricante: "",
-    modelo: "",
-    motorizacion: "",
-    antiguedad: "",
-    descripcion: "",
-    tipoVehiculo: "",
-    precioDia: "",
+const EditarVehiculo = ({ selectedVehicle, editVehicleHandler }) => {
+  const [vehicle, setVehicle] = useState({
+    fabricante: '',
+    modelo: '',
+    motorizacion: '',
+    antiguedad: '',
+    descripcion: '',
+    tipoVehiculo: '',
+    precioDia: ''
   });
+
+  useEffect(() => {
+    if (selectedVehicle) {
+      setVehicle({
+        fabricante: selectedVehicle.Fabricante || '',
+        modelo: selectedVehicle.Modelo || '',
+        motorizacion: selectedVehicle.Motorizacion || '',
+        antiguedad: selectedVehicle.Antigüedad !== undefined ? selectedVehicle.Antigüedad.toString() : '',
+        descripcion: selectedVehicle.Descripcion || '',
+        tipoVehiculo: selectedVehicle.TipoVehiculo || '',
+        precioDia: selectedVehicle.PrecioDia !== undefined ? selectedVehicle.PrecioDia.toString() : ''
+      });
+    }
+  }, [selectedVehicle]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setDatos({ ...datos, [name]: value });
+    setVehicle((prevVehicle) => ({ ...prevVehicle, [name]: value }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    try {
-      const newVehicle = { ...datos, enMantenimiento: false };
-      await onAddVehicle(newVehicle);
-      console.log("Vehículo añadido correctamente");
-    } catch (error) {
-      console.error("Error adding vehicle:", error);
-    }
+    editVehicleHandler(selectedVehicle.MatriculaCar, vehicle);
   };
 
   return (
     <div className="container">
       <form className="form-container" onSubmit={handleSubmit}>
         <h2 className="title">Editar Vehiculo</h2>
-        <div className="input-container">
-          <label className="label" htmlFor="matriculaCar">
-            Matrícula del coche:
-          </label>
-          <input
-            className="input"
-            type="text"
-            id="matriculaCar"
-            name="matriculaCar"
-            value={datos.matriculaCar}
-            onChange={handleChange}
-          />
-        </div>
         <div className="input-container">
           <label className="label" htmlFor="fabricante">
             Fabricante:
@@ -56,7 +49,7 @@ const EditarVehiculo = ({ onAddVehicle }) => {
             type="text"
             id="fabricante"
             name="fabricante"
-            value={datos.fabricante}
+            value={vehicle.fabricante}
             onChange={handleChange}
           />
         </div>
@@ -69,7 +62,7 @@ const EditarVehiculo = ({ onAddVehicle }) => {
             type="text"
             id="modelo"
             name="modelo"
-            value={datos.modelo}
+            value={vehicle.modelo}
             onChange={handleChange}
           />
         </div>
@@ -82,7 +75,7 @@ const EditarVehiculo = ({ onAddVehicle }) => {
             type="text"
             id="motorizacion"
             name="motorizacion"
-            value={datos.motorizacion}
+            value={vehicle.motorizacion}
             onChange={handleChange}
           />
         </div>
@@ -95,7 +88,7 @@ const EditarVehiculo = ({ onAddVehicle }) => {
             type="text"
             id="antiguedad"
             name="antiguedad"
-            value={datos.antiguedad}
+            value={vehicle.antiguedad}
             onChange={handleChange}
           />
         </div>
@@ -108,7 +101,7 @@ const EditarVehiculo = ({ onAddVehicle }) => {
             type="text"
             id="descripcion"
             name="descripcion"
-            value={datos.descripcion}
+            value={vehicle.descripcion}
             onChange={handleChange}
           />
         </div>
@@ -121,7 +114,7 @@ const EditarVehiculo = ({ onAddVehicle }) => {
             type="text"
             id="tipoVehiculo"
             name="tipoVehiculo"
-            value={datos.tipoVehiculo}
+            value={vehicle.tipoVehiculo}
             onChange={handleChange}
           />
         </div>
@@ -134,7 +127,7 @@ const EditarVehiculo = ({ onAddVehicle }) => {
             type="text"
             id="precioDia"
             name="precioDia"
-            value={datos.precioDia}
+            value={vehicle.precioDia}
             onChange={handleChange}
           />
         </div>
