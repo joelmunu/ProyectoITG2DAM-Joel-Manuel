@@ -1,4 +1,5 @@
 import axios from "axios";
+
 const API_URL = "http://localhost:8000/api/v1/rentacartf";
 
 const getVistaGeneral = async () => {
@@ -24,8 +25,19 @@ const deleteVehicle = async (matriculaParam) => {
   return (await response).data.data;
 };
 
-const editVehicle = async (matriculaParam, data) => {
-  const response = axios.put(`${API_URL}/vehiculo/${matriculaParam}`, data);
+const editVehicle = async (matricula, vehicle) => {
+  console.log(vehicle);
+  const response = await axios.put(`${API_URL}/vehiculo/${matricula}`, vehicle);
+  return response.data;
+};
+
+const addVehicle = async (vehicleData) => {
+  const response = await axios.post(`${API_URL}/vehiculos/`, vehicleData);
+  return response.data.data;
+};
+
+const deleteClient = async (dni) => {
+  const response = axios.delete(`${API_URL}/cliente/${dni}`);
   return (await response).data.data;
 };
 
@@ -35,6 +47,8 @@ const RentService = {
   getClients,
   deleteVehicle,
   editVehicle,
+  addVehicle,
+  deleteClient,
 };
 
 export default RentService;

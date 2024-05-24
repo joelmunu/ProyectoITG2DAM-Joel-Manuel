@@ -2,7 +2,13 @@ import React from "react";
 import ClRow from "../ClRow/ClRow";
 import "../../styles/ClTable.css";
 
-const ClTable = ({ clients }) => {
+const ClTable = ({ clients, deleteClientHandler, setClientsData }) => {
+  const handleDeleteClient = async (dni) => {
+    await deleteClientHandler(dni);
+    const updatedClients = clients.filter((client) => client.dni !== dni);
+    setClientsData(updatedClients);
+  };
+
   return (
     <div className="container-cl">
       <h1 className="table-title-cl">Vista general</h1>
@@ -20,12 +26,17 @@ const ClTable = ({ clients }) => {
               <th scope="col">Inicio Alquiler</th>
               <th scope="col">Fin Alquiler</th>
               <th scope="col">Matricula</th>
+              <th scope="col">Acción</th>
             </tr>
           </thead>
           <tbody>
             {clients &&
               clients.map((client) => (
-                <ClRow client={client} key={client.DNI} />
+                <ClRow
+                  client={client}
+                  key={client.DNI}
+                  deleteClientHandler={handleDeleteClient}
+                />
               ))}
           </tbody>
         </table>

@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import VHRow from "../vhrow/VHRow";
 import "../../styles/VhTable.css";
 
@@ -6,15 +7,18 @@ const VhTable = ({
   vehicles,
   deleteVehicleHandler,
   editVehicleHandler,
-  setSelectedVehicle,
+  setSelectedVehicle
 }) => {
   return (
     <div className="container-vh">
-      <button className="add-vehicle-button"> + Añadir Vehiculo</button>
+      <Link className="add-vehicle-button" to="/addVehicle">
+        {" "}
+        + Añadir Vehiculo
+      </Link>
       <div
-        className={`table-container ${
-          vehicles.length > 13 ? "scrollable" : ""
-        }`}
+        className="table-container" {
+          ...vehicles.length > 13 ? "scrollable" : ""
+        }
       >
         <table className="table table-success table-striped">
           <thead>
@@ -34,12 +38,11 @@ const VhTable = ({
               vehicles.map((vehicle) => (
                 <VHRow
                   vehicle={vehicle}
-                  key={vehicle.matricula}
+                  key={vehicle.MatriculaCar}
                   deleteVehicleHandler={deleteVehicleHandler}
                   editVehicleHandler={editVehicleHandler}
                   setSelectedVehicle={setSelectedVehicle}
                 />
-                // CREAR NUEVA PAGINA PARA LA EDICION DE LOS VEHICULOS :) UWU
               ))}
           </tbody>
         </table>

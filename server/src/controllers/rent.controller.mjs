@@ -90,7 +90,7 @@ const addVehicle = async (req, res) => {
     const { matriculaCar, fabricante, modelo, motorizacion, antiguedad, descripcion, tipoVehiculo, precioDia } = req.body;
 
     if (!matriculaCar || !fabricante || !modelo || !motorizacion || !antiguedad || !descripcion || !tipoVehiculo || !precioDia) {
-        console.log(`ERROR: Missing ${!matriculaCar ? 'matriculaCar' : ''} ${!fabricante ? 'fabricante' : ''} ${!modelo ? 'modelo' : ''} ${!motorizacion ? 'motorizacion' : ''} ${!antiguedad ? 'antiguedad' : ''} ${!descripcion ? 'descripcion' : ''} ${!tipoVehiculo ? 'tipoVehiculo' : ''} ${!precioDia ? 'precioDia' : ''}field(s)`);
+        console.log(`ERROR: Missing ${!matriculaCar ? 'matriculaCar' : ''} ${!fabricante ? 'fabricante' : ''} ${!modelo ? 'modelo' : ''} ${!motorizacion ? 'motorizacion' : ''} ${!antiguedad ? 'antiguedad' : ''} ${!descripcion ? 'descripcion' : ''} ${!tipoVehiculo ? 'tipoVehiculo' : ''} ${!precioDia ? 'precioDia' : ''} field(s)`);
 
         return res.status(httpCodes.BAD_REQUEST).send({
             statusCode: httpCodes.BAD_REQUEST,
@@ -98,30 +98,26 @@ const addVehicle = async (req, res) => {
             message: 'Error: se requieren todos los parámetros',
             data: null
         });
-    };
+    }
 
     try {
-        const data = await rentService.addVehicle(matriculaCar, fabricante, modelo, motorizacion, antiguedad, descripcion, tipoVehiculo, precioDia);
+        const newVehicle = await rentService.addVehicle(matriculaCar, fabricante, modelo, motorizacion, antiguedad, descripcion, tipoVehiculo, precioDia);
         res.send({
             statusCode: httpCodes.OK,
             statusMessage: 'OK',
-            message:
-                !data || data.length === 0
-                    ? 'La tabla vehículo esta vacía'
-                    : 'Vehículo añadido correctamente',
-            data
+            message: 'Vehículo añadido correctamente',
+            data: newVehicle // Devuelve los datos del vehículo añadido
         });
     } catch (error) {
-        console.log(error)
-        res.status(httpCodes.INTERNAL_SERVER_ERROR)
-            .send({
-                statusCode: httpCodes.INTERNAL_SERVER_ERROR,
-                statusMessage: 'Internal Server Error',
-                message: null,
-                data: null
-            });
-    };
-}
+        console.log(error);
+        res.status(httpCodes.INTERNAL_SERVER_ERROR).send({
+            statusCode: httpCodes.INTERNAL_SERVER_ERROR,
+            statusMessage: 'Internal Server Error',
+            message: null,
+            data: null
+        });
+    }
+};
 
 const editVehicle = async (req, res) => {
     const { matriculaParam } = req.params;

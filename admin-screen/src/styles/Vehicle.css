@@ -11,8 +11,9 @@ body {
   align-items: center;
   justify-content: center; /* Center content vertically */
   justify-items: center; /* Center items horizontally */
-  height: 100vh; /* Cubrir toda la altura de la pantalla */
-  width: 100vw; /* Cubrir todo el ancho de la pantalla */
+  height: 50%; /* Cubrir toda la altura de la pantalla */
+  width: 50%; /* Cubrir todo el ancho de la pantalla */
+  margin: 0 auto;
 }
 
 /* Column styles */
@@ -24,18 +25,19 @@ body {
   border-radius: 10px; /* Bordes redondeados */
   margin: 0 auto; /* Centrar horizontalmente */
   margin-bottom: 50px; /* Subir la tarjeta 50 píxeles */
+  margin-top: 50px;
 }
 
 .button {
   background-color: #119da4; /* Color de fondo verde */
   color: white; /* Color de texto blanco */
-  padding: 12px 20px; /* Acolchado interno */
+  padding: 12px; /* Acolchado interno */
   border: none; /* Sin borde */
   border-radius: 4px; /* Bordes redondeados */
   cursor: pointer; /* Puntero del cursor como mano */
-  margin-top: 8px;
-  margin-left: 8px;
   align-self: flex-start;
   font-weight: bold;
   font-size: 15px;
+  margin: 0 auto;
+  margin-top: 8px;
 }
