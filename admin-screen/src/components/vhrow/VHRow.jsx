@@ -11,9 +11,8 @@ import { Link } from "react-router-dom";
 const VHRow = ({ vehicle, deleteVehicleHandler, setSelectedVehicle }) => {
   const deleteVehicle = (matriculaParam) => {
     const deleteConfirmation = window.confirm(
-      `¿Está seguro de eliminar el registro con id ${matriculaParam}`
+      `¿Está seguro de eliminar el registro con matrícula ${matriculaParam}?`
     );
-    // If the user clicks on Confirm the actor will be eliminated by using the method deleteActorHandler
     if (deleteConfirmation) {
       deleteVehicleHandler(matriculaParam);
     }

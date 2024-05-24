@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom"; // Importa Link
+import { Link } from "react-router-dom";
 import VHRow from "../vhrow/VHRow";
 import "../../styles/VhTable.css";
 
@@ -10,15 +10,6 @@ const VhTable = ({
   setSelectedVehicle,
   setVehicles
 }) => {
-  const handleDeleteVehicle = async (matriculaParam) => {
-    await deleteVehicleHandler(matriculaParam); // Llama al método para eliminar el vehículo
-    // Filtra los vehículos para eliminar el que corresponde a matriculaParam
-    const updatedVehicles = vehicles.filter(
-      (vehicle) => vehicle.MatriculaCar !== matriculaParam
-    );
-    setVehicles(updatedVehicles); // Actualiza el estado local de los vehículos
-  };
-
   return (
     <div className="container-vh">
       <Link className="add-vehicle-button" to="/addVehicle">
@@ -48,8 +39,8 @@ const VhTable = ({
               vehicles.map((vehicle) => (
                 <VHRow
                   vehicle={vehicle}
-                  key={vehicle.matricula}
-                  deleteVehicleHandler={handleDeleteVehicle}
+                  key={vehicle.MatriculaCar}
+                  deleteVehicleHandler={deleteVehicleHandler}
                   editVehicleHandler={editVehicleHandler}
                   setSelectedVehicle={setSelectedVehicle}
                 />

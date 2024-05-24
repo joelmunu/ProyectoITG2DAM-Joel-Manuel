@@ -1,4 +1,3 @@
-// RentApp.js
 import React, { useState, useEffect } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import RentService from "../../services/rent.service";
@@ -46,7 +45,7 @@ const RentApp = ({ isLoggedIn, setIsLoggedIn }) => {
       await RentService.deleteVehicle(matriculaParam);
       setVehicles((prevVehicles) =>
         prevVehicles.filter(
-          (vehicle) => vehicle.matriculaCar !== matriculaParam
+          (vehicle) => vehicle.MatriculaCar !== matriculaParam
         )
       );
     } catch (error) {
@@ -70,7 +69,7 @@ const RentApp = ({ isLoggedIn, setIsLoggedIn }) => {
       await RentService.editVehicle(matriculaParam, updatedVehicle);
       setVehicles((prevVehicles) =>
         prevVehicles.map((vehicle) =>
-          vehicle.matriculaCar === matriculaParam ? updatedVehicle : vehicle
+          vehicle.MatriculaCar === matriculaParam ? updatedVehicle : vehicle
         )
       );
     } catch (error) {
@@ -80,8 +79,8 @@ const RentApp = ({ isLoggedIn, setIsLoggedIn }) => {
 
   const handleAddVehicle = async (newVehicle) => {
     try {
-      await RentService.addVehicle(newVehicle);
-      setVehicles((prevVehicles) => [...prevVehicles, newVehicle]);
+      const addedVehicle = await RentService.addVehicle(newVehicle);
+      setVehicles((prevVehicles) => [...prevVehicles, addedVehicle]);
     } catch (error) {
       console.error("Error adding vehicle:", error);
     }
@@ -113,6 +112,7 @@ const RentApp = ({ isLoggedIn, setIsLoggedIn }) => {
                 deleteVehicleHandler={deleteVehicleHandler}
                 editVehicleHandler={editVehicleHandler}
                 setSelectedVehicle={setSelectedVehicle}
+                setVehicles={setVehicles}
               />
             }
           />
