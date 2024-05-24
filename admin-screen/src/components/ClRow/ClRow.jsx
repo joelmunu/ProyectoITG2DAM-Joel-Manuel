@@ -2,6 +2,7 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
+// Define a functional component called ClRow
 const ClRow = ({ client, deleteClientHandler }) => {
   const deleteClient = (dni) => {
     const deleteConfirmation = window.confirm(
@@ -12,6 +13,7 @@ const ClRow = ({ client, deleteClientHandler }) => {
       deleteClientHandler(dni);
     }
   };
+  // Render the client row
   return (
     <tr>
       <th scope="row">{client.dni}</th>

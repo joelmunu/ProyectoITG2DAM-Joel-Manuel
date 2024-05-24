@@ -1,4 +1,5 @@
 import "../../styles/Login.css";
+// Define a functional component called Login
 
 const Login = ({ handleLogin }) => {
   const handleSubmit = async (e) => {
@@ -34,6 +35,7 @@ const Login = ({ handleLogin }) => {
       }
     }
   };
+  // Render the login form
 
   return (
     <div className="containera">

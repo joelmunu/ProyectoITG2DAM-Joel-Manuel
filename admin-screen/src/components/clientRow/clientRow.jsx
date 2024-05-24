@@ -1,3 +1,4 @@
+// Define a React functional component called clientRow
 import React from "react";
 
 const clientRow = ({ client }) => {

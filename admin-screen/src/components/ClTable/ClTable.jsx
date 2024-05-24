@@ -1,6 +1,7 @@
 import React from "react";
 import ClRow from "../ClRow/ClRow";
 import "../../styles/ClTable.css";
+// Define a functional component called ClTable
 
 const ClTable = ({ clients, deleteClientHandler, setClientsData }) => {
   const handleDeleteClient = async (dni) => {
@@ -8,6 +9,8 @@ const ClTable = ({ clients, deleteClientHandler, setClientsData }) => {
     const updatedClients = clients.filter((client) => client.dni !== dni);
     setClientsData(updatedClients);
   };
+
+  // Render the client table
 
   return (
     <div className="container-cl">
