@@ -16,7 +16,7 @@ body {
   background-color: hsla(183, 43%, 81%, 0.8); /* Fondo translúcido */
   border-radius: 10px; /* Bordes redondeados */
   padding: 20px; /* Espacio alrededor de la tabla */
-  width: 90%;
+  width: 85%;
   margin: 0 auto;
   margin-top: 50px;
 }
@@ -36,7 +36,7 @@ body {
 
 /* Estilos para la tabla */
 .table-cl {
-  width: 100%; /* Ancho completo */
+  width: 90%; /* Ancho completo */
   border-collapse: collapse; /* Combina los bordes de las celdas */
 }
 

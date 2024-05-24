@@ -27,6 +27,7 @@ a {
   font-weight: bold;
   margin-left: 10px;
   margin-right: 10px;
+  margin-bottom: 10px;
 }
 
 .logout-btn {
@@ -38,4 +39,14 @@ a {
   color: #fff;
   margin-left: 25px;
   margin-right: 25px;
+  margin-bottom: 10px;
+}
+
+.title-admin {
+  font-size: 30px;
+  color: #ffff;
+  font-weight: bold;
+  margin-left: 10px;
+  margin-right: -240px;
+  margin-bottom: 10px;
 }

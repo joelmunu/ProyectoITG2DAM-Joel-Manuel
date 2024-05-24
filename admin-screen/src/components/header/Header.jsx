@@ -13,10 +13,16 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
             <Link to="/VistaGeneral">Vista General</Link>
             <Link to="/Vehiculos">Vehiculos</Link>
             <Link to="/Clientes">Clientes</Link>
+            <span className="title-admin">Admin</span>
             <div>
-              <span className="title">Admin</span>
-              <button className="logout-btn" onClick={() => setIsLoggedIn(false)}>
-                <FontAwesomeIcon icon={faRightFromBracket} className="color-icon" />
+              <button
+                className="logout-btn"
+                onClick={() => setIsLoggedIn(false)}
+              >
+                <FontAwesomeIcon
+                  icon={faRightFromBracket}
+                  className="color-icon"
+                />
               </button>
             </div>
           </>
