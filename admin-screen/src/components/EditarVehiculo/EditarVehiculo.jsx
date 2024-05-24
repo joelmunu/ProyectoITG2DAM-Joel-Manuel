@@ -3,25 +3,31 @@ import "../../styles/EditarVehiculo.css";
 
 const EditarVehiculo = ({ selectedVehicle, editVehicleHandler }) => {
   const [vehicle, setVehicle] = useState({
-    fabricante: '',
-    modelo: '',
-    motorizacion: '',
-    antiguedad: '',
-    descripcion: '',
-    tipoVehiculo: '',
-    precioDia: ''
+    fabricante: "",
+    modelo: "",
+    motorizacion: "",
+    antiguedad: "",
+    descripcion: "",
+    tipoVehiculo: "",
+    precioDia: "",
   });
 
   useEffect(() => {
     if (selectedVehicle) {
       setVehicle({
-        fabricante: selectedVehicle.Fabricante || '',
-        modelo: selectedVehicle.Modelo || '',
-        motorizacion: selectedVehicle.Motorizacion || '',
-        antiguedad: selectedVehicle.Antigüedad !== undefined ? selectedVehicle.Antigüedad.toString() : '',
-        descripcion: selectedVehicle.Descripcion || '',
-        tipoVehiculo: selectedVehicle.TipoVehiculo || '',
-        precioDia: selectedVehicle.PrecioDia !== undefined ? selectedVehicle.PrecioDia.toString() : ''
+        fabricante: selectedVehicle.Fabricante || "",
+        modelo: selectedVehicle.Modelo || "",
+        motorizacion: selectedVehicle.Motorizacion || "",
+        antiguedad:
+          selectedVehicle.Antigüedad !== undefined
+            ? selectedVehicle.Antigüedad.toString()
+            : "",
+        descripcion: selectedVehicle.Descripcion || "",
+        tipoVehiculo: selectedVehicle.TipoVehiculo || "",
+        precioDia:
+          selectedVehicle.PrecioDia !== undefined
+            ? selectedVehicle.PrecioDia.toString()
+            : "",
       });
     }
   }, [selectedVehicle]);
@@ -33,6 +39,30 @@ const EditarVehiculo = ({ selectedVehicle, editVehicleHandler }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    // Validar que todos los campos están completos
+    const {
+      fabricante,
+      modelo,
+      motorizacion,
+      antiguedad,
+      descripcion,
+      tipoVehiculo,
+      precioDia,
+    } = vehicle;
+    if (
+      !fabricante ||
+      !modelo ||
+      !motorizacion ||
+      !antiguedad ||
+      !descripcion ||
+      !tipoVehiculo ||
+      !precioDia
+    ) {
+      alert("Todos los campos son obligatorios.");
+      return;
+    }
+
     editVehicleHandler(selectedVehicle.MatriculaCar, vehicle);
   };
 
@@ -51,6 +81,7 @@ const EditarVehiculo = ({ selectedVehicle, editVehicleHandler }) => {
             name="fabricante"
             value={vehicle.fabricante}
             onChange={handleChange}
+            required
           />
         </div>
         <div className="input-container">
@@ -64,6 +95,7 @@ const EditarVehiculo = ({ selectedVehicle, editVehicleHandler }) => {
             name="modelo"
             value={vehicle.modelo}
             onChange={handleChange}
+            required
           />
         </div>
         <div className="input-container">
@@ -77,6 +109,7 @@ const EditarVehiculo = ({ selectedVehicle, editVehicleHandler }) => {
             name="motorizacion"
             value={vehicle.motorizacion}
             onChange={handleChange}
+            required
           />
         </div>
         <div className="input-container">
@@ -90,6 +123,7 @@ const EditarVehiculo = ({ selectedVehicle, editVehicleHandler }) => {
             name="antiguedad"
             value={vehicle.antiguedad}
             onChange={handleChange}
+            required
           />
         </div>
         <div className="input-container">
@@ -103,6 +137,7 @@ const EditarVehiculo = ({ selectedVehicle, editVehicleHandler }) => {
             name="descripcion"
             value={vehicle.descripcion}
             onChange={handleChange}
+            required
           />
         </div>
         <div className="input-container">
@@ -116,6 +151,7 @@ const EditarVehiculo = ({ selectedVehicle, editVehicleHandler }) => {
             name="tipoVehiculo"
             value={vehicle.tipoVehiculo}
             onChange={handleChange}
+            required
           />
         </div>
         <div className="input-container">
@@ -129,6 +165,7 @@ const EditarVehiculo = ({ selectedVehicle, editVehicleHandler }) => {
             name="precioDia"
             value={vehicle.precioDia}
             onChange={handleChange}
+            required
           />
         </div>
         <div className="button-container">

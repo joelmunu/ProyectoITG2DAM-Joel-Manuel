@@ -20,11 +20,37 @@ const FormularioVehiculo = ({ onAddVehicle }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Validar que todos los campos están completos
+    const {
+      matriculaCar,
+      fabricante,
+      modelo,
+      motorizacion,
+      antiguedad,
+      descripcion,
+      tipoVehiculo,
+      precioDia,
+    } = datos;
+    if (
+      !matriculaCar ||
+      !fabricante ||
+      !modelo ||
+      !motorizacion ||
+      !antiguedad ||
+      !descripcion ||
+      !tipoVehiculo ||
+      !precioDia
+    ) {
+      alert("Todos los campos son obligatorios.");
+      return;
+    }
+
     try {
       const newVehicle = { ...datos, enMantenimiento: false };
       await onAddVehicle(newVehicle);
       console.log("Vehículo añadido correctamente");
-      alert(`Se ha añadido el vehículo ${datos.matriculaCar}`)
+      alert(`Se ha añadido el vehículo ${datos.matriculaCar}`);
     } catch (error) {
       console.error("Error adding vehicle:", error);
     }
@@ -45,6 +71,7 @@ const FormularioVehiculo = ({ onAddVehicle }) => {
             name="matriculaCar"
             value={datos.matriculaCar}
             onChange={handleChange}
+            required
           />
         </div>
         <div className="input-container">
@@ -58,6 +85,7 @@ const FormularioVehiculo = ({ onAddVehicle }) => {
             name="fabricante"
             value={datos.fabricante}
             onChange={handleChange}
+            required
           />
         </div>
         <div className="input-container">
@@ -71,6 +99,7 @@ const FormularioVehiculo = ({ onAddVehicle }) => {
             name="modelo"
             value={datos.modelo}
             onChange={handleChange}
+            required
           />
         </div>
         <div className="input-container">
@@ -84,6 +113,7 @@ const FormularioVehiculo = ({ onAddVehicle }) => {
             name="motorizacion"
             value={datos.motorizacion}
             onChange={handleChange}
+            required
           />
         </div>
         <div className="input-container">
@@ -97,6 +127,7 @@ const FormularioVehiculo = ({ onAddVehicle }) => {
             name="antiguedad"
             value={datos.antiguedad}
             onChange={handleChange}
+            required
           />
         </div>
         <div className="input-container">
@@ -110,6 +141,7 @@ const FormularioVehiculo = ({ onAddVehicle }) => {
             name="descripcion"
             value={datos.descripcion}
             onChange={handleChange}
+            required
           />
         </div>
         <div className="input-container">
@@ -123,6 +155,7 @@ const FormularioVehiculo = ({ onAddVehicle }) => {
             name="tipoVehiculo"
             value={datos.tipoVehiculo}
             onChange={handleChange}
+            required
           />
         </div>
         <div className="input-container">
@@ -136,6 +169,7 @@ const FormularioVehiculo = ({ onAddVehicle }) => {
             name="precioDia"
             value={datos.precioDia}
             onChange={handleChange}
+            required
           />
         </div>
         <div className="button-container">

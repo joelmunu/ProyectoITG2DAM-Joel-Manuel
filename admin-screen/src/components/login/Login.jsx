@@ -1,13 +1,38 @@
-import React, { useState } from "react";
 import "../../styles/Login.css";
-import { adminLogin } from "../../services/auth.service"; // Ajusta la importación según sea necesario
 
 const Login = ({ handleLogin }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const email = e.target.elements.email.value;
     const password = e.target.elements.password.value;
-    await handleLogin(email, password);
+
+    let valid = true;
+
+    if (!email) {
+      alert("El email es obligatorio");
+      valid = false;
+    }
+
+    if (!password) {
+      alert("La contraseña es obligatoria");
+      valid = false;
+    }
+
+    if (!valid) {
+      return;
+    }
+
+    try {
+      await handleLogin(email, password);
+    } catch (error) {
+      if (error.message === "Usuario o contraseña incorrectos") {
+        alert("Email o contraseña incorrectos");
+      } else {
+        alert(
+          "Ha ocurrido un error inesperado. Por favor, inténtalo de nuevo."
+        );
+      }
+    }
   };
 
   return (
@@ -23,7 +48,9 @@ const Login = ({ handleLogin }) => {
             <label>Contraseña</label>
             <input type="password" name="password" className="input-field" />
           </div>
-          <button type="submit" className="custom-button">Iniciar Sesión</button>
+          <button type="submit" className="custom-button">
+            Iniciar Sesión
+          </button>
         </form>
       </div>
     </div>
