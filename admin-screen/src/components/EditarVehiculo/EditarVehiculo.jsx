@@ -1,8 +1,8 @@
-// FormularioVehiculo.js
+// EditarVehiculo.js
 import React, { useState } from "react";
-import "../../styles/FormularioVehiculo.css";
+import "../../styles/EditarVehiculo.css";
 
-const FormularioVehiculo = ({ onAddVehicle }) => {
+const EditarVehiculo = ({ onAddVehicle }) => {
   const [datos, setDatos] = useState({
     matriculaCar: "",
     fabricante: "",
@@ -33,7 +33,7 @@ const FormularioVehiculo = ({ onAddVehicle }) => {
   return (
     <div className="container">
       <form className="form-container" onSubmit={handleSubmit}>
-        <h2 className="title">Añadir Vehículo</h2>
+        <h2 className="title">Editar Vehiculo</h2>
         <div className="input-container">
           <label className="label" htmlFor="matriculaCar">
             Matrícula del coche:
@@ -148,4 +148,4 @@ const FormularioVehiculo = ({ onAddVehicle }) => {
   );
 };
 
-export default FormularioVehiculo;
+export default EditarVehiculo;
